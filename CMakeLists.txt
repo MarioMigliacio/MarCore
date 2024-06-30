@@ -28,14 +28,11 @@ add_executable(mario_core ${SOURCES})
 # Testing setup
 enable_testing()
 
-# Add tests
+# Add tests subdirectory
+add_subdirectory(test)
+
+# Test source files
 file(GLOB_RECURSE TEST_SOURCES "${PROJECT_SOURCE_DIR}/test/*.c")
-foreach(test_source ${TEST_SOURCES})
-    get_filename_component(test_name ${test_source} NAME_WE)
-    add_executable(${test_name} ${test_source})
-    target_link_libraries(${test_name} mario_core) # Link the main project if needed
-    add_test(NAME ${test_name} COMMAND ${test_name})
-endforeach()
 
 # Custom targets for building, cleaning, testing, and running
 add_custom_target(run
