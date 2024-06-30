@@ -1,15 +1,14 @@
 /* ********************************************************************************************* */
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
-/* @file: mar_core_main.c                                                                        */
-/* \brief: Entry point for the application                                                       */
+/* @file: test_main.c                                                                            */
+/* \brief: Main entry for test run                                                               */
 /*                                                                                               */
-/* \Expects: mar_core definitions are defined and linked properly                                */
+/* \Expects: mar_core_test definitions are defined and linked properly                           */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mar_core_type.h"
-#include <stdio.h>   // printf [remove later]
+#include "mar_core_test.h"
 
 /*
  * \brief main application entry point
@@ -19,13 +18,11 @@
  * \param argc: int, count of arguments
  * \param argv: char**, array of input commands
  * 
- * \return u32: status code if relevent
+ * \return int: status code if relevent
  */
-int main(int argc, char* argv[]) 
+int main(int argc, char* argv[])
 {
-    u8 small = 98;
-
-    printf("%d\n", small);
+    Run_All_Tests();
 
     return 0;
 }

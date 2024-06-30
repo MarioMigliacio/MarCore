@@ -1,70 +1,17 @@
-/* ******************************************* */
-/* File stamp: 06/2024                         */
-/* Author: Mario Migliacio                     */
-/* Project: Mar.io                             */
-/* ******************************************* */
+/* ********************************************************************************************* */
+/*                                                                                               */
+/* Author: Mario Migliacio                                                                       */
+/* @file: mar_core_type.h                                                                        */
+/* \brief: Provide simple type utlity                                                            */
+/*                                                                                               */
+/* \Expects: No expectations are made prior to type definitions in this file                     */
+/*                                                                                               */
+/* ********************************************************************************************* */
 
 #ifndef MAR_CORE_TYPE_H
 #define MAR_CORE_TYPE_H
 
-/*
- * @file mar_core_type.h 
- * Provide simple type utlity
- */
-
-/* ***********************************/
-/*            (template)             */
-/* ***********************************/
-
 #include <stdint.h>
-
-/* ***********************************/
-/* Unsigned Typedef definitions      */
-/* ***********************************/
-
-/*
- * \brief unsigned 8 bit value. Range: (0, 255)
- */
-typedef uint8_t u8;
-
-/*
- * \brief unsigned 16 bit value. Range: (0, 65,535)
- */
-typedef uint16_t u16;
-
-/*
- * \brief unsigned 32 bit value. Range: (0, 4,294,967,295)
- */
-typedef uint32_t u32;
-
-/*
- * \brief unsigned 64 bit value. Range: (0, 18,446,744,073,709,551,615)
- */
-typedef uint64_t u64;
-
-/* ***********************************/
-/* Signed Typedef definitions        */
-/* ***********************************/
-
-/*
- * \brief signed 8 bit value. Range: (-128, 127)
- */
-typedef int8_t i8;
-
-/*
- * \brief signed 16 bit value. Range: (-32,768, 32,767)
- */
-typedef int16_t i16;
-
-/*
- * \brief signed 32 bit value. Range: (-2,147,483,648, 2,147,483,647)
- */
-typedef int32_t i32;
-
-/*
- * \brief signed 64 bit value. Range: (−9,223,372,036,854,775,808, 9,223,372,036,854,775,807)
- */
-typedef int64_t i64;
 
 /* ***********************************/
 /* Preprocessor definitions          */
@@ -153,5 +100,54 @@ typedef int64_t i64;
 * \brief Returns the truth value of if the bit 'val' at position 'pos' is 1
 */
 #define IS_BIT_SET(val, pos) (((val) & (1U << (pos))) != 0)
+
+
+/* ***********************************/
+/* Unsigned Typedef definitions      */
+/* ***********************************/
+
+/*
+ * \brief unsigned 8 bit value. Range: (0, 255)
+ */
+typedef uint8_t u8;
+
+/*
+ * \brief unsigned 16 bit value. Range: (0, 65,535)
+ */
+typedef uint16_t u16;
+
+/*
+ * \brief unsigned 32 bit value. Range: (0, 4,294,967,295)
+ */
+typedef uint32_t u32;
+
+/*
+ * \brief unsigned 64 bit value. Range: (0, 18,446,744,073,709,551,615)
+ */
+typedef uint64_t u64;
+
+/* ***********************************/
+/* Signed Typedef definitions        */
+/* ***********************************/
+
+/*
+ * \brief signed 8 bit value. Range: (-128, 127)
+ */
+typedef int8_t i8;
+
+/*
+ * \brief signed 16 bit value. Range: (-32,768, 32,767)
+ */
+typedef int16_t i16;
+
+/*
+ * \brief signed 32 bit value. Range: (-2,147,483,648, 2,147,483,647)
+ */
+typedef int32_t i32;
+
+/*
+ * \brief signed 64 bit value. Range: (−9,223,372,036,854,775,808, 9,223,372,036,854,775,807)
+ */
+typedef int64_t i64;
 
 #endif

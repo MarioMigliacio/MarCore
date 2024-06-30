@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "mar_core_type.h": "c",
+        "mar_core_test_file.h": "c",
+        "mar_core_test_assert.h": "c",
+        "mar_core_test.h": "c"
+    }
+}
