@@ -9,6 +9,7 @@
 /* ********************************************************************************************* */
 
 #include "mar_core_test.h"
+#include "mar_core_log.h"
 
 /*
  * \brief main application entry point

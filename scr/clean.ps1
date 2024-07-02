@@ -16,30 +16,27 @@
 #                                                                                                 #
 ###################################################################################################
 
-$buildDir = Join-Path -Path $PSScriptRoot -ChildPath "..\build"
-$oldTest = "../test/dump/last_test_output.txt"
-$verboseTest = "../test/dump/last_test_output_verbose.txt"
-$hint = "Use { .\build.ps1 }"
+# Note: The scriptDir, projectRoot, and buildDir allows this script to be invoked from anywhere. 
+#       This allows the use of .\scr\build.ps1 from even the root directory, or inside the \scr directly.
 
+# Get the directory of the current script
+$scriptDir = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+
+# Define the project root and build directory
+$projectRoot = (Resolve-Path "$scriptDir\..").Path
+$buildDir = "$projectRoot\build"
+$testDir = "$projectRoot\test_output"
+
+# Clean any build artifact
 if ((Test-Path -Path "../build")) 
 {
     Remove-Item -Recurse -Force -Path $buildDir
     Write-Host "Build directory removed." -ForegroundColor Green
-
-    # brief: if the build existed, we might have ran tests, clear any old output as well
-    if (Test-Path -Path $oldTest)
-    {
-        Remove-Item -Force -Path $oldTest
-        Write-Host "Old Test output cleared." -ForegroundColor Green
-    }
-    if (Test-Path -Path $verboseTest)
-    {
-        Remove-Item -Force -Path $verboseTest
-        Write-Host "Old Verbose Test output cleared." -ForegroundColor Green
-    }
 }
-else
+
+# Clean any test_output artifacts
+if (Test-Path -Path $testDir)
 {
-    Write-Host "Build directory does not exist. $hint" -ForegroundColor Red
-    exit 1
+    Remove-Item -Recurse -Force -Path $testDir
+    Write-Host "Old Test output cleared." -ForegroundColor Green
 }

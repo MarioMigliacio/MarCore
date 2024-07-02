@@ -6,9 +6,8 @@
 #                                                                                                 #
 # \Expects: No expectations are made prior to executing build.ps1                                 #
 #                                                                                                 #
-# \Params: -r [RUN] run the application after build                                               #
-#          -c [CLEAN] clean the application before build                                          #
-#          -t [TEST] compile an output test file for after build                                  #
+# \Params: -c [CLEAN] clean the application before build                                          #
+#          -r [RUN] run the application after build                                               #
 #                                                                                                 #
 # \Success: The application has been built                                                        #
 #           Display build status in MAGENTA prompt                                                #
@@ -18,49 +17,58 @@
 ###################################################################################################
 
 param (
-    [switch]$r,
     [switch]$c,
-    [switch]$t
+    [switch]$r
 )
+
+# Note: The scriptDir, projectRoot, and buildDir allows this script to be invoked from anywhere. 
+#       This allows the use of .\scr\build.ps1 from even the root directory, or inside the \scr directly.
+
+# Get the directory of the current script
+$scriptDir = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+
+# Define the project root and build directory
+$projectRoot = (Resolve-Path "$scriptDir\..").Path
+$buildDir = "$projectRoot\build"
 
 function createBuildDir
 {
     # MUST: Create the build directory if it doesn't exist
-    if (-Not (Test-Path -Path "../build")) 
+    if (-Not (Test-Path -Path $buildDir)) 
     {
-        New-Item -ItemType Directory -Path "../build"
+        New-Item -ItemType Directory -Path $buildDir
     }
 }
 
 function simpleBuild
 {
     # Preserve our calling directory, so running this script doesn't change our location in the shell.
-    $currDirectory = Get-Location
+    $originalDir = Get-Location
 
-    # Navigate to the build directory
-    Set-Location -Path "../build"
+    # Change to the project root directory
+    Set-Location -Path $projectRoot
 
-    # Run CMake and build the project
-    cmake ..
-    cmake --build .
+    # Create the build/bin directory structure and place all the executables and libraries
+    cmake -S . -B $buildDir
+    cmake --build $buildDir
 
-    # Restore the directory which we called from
-    Set-Location -Path $currDirectory
+    # Return to the original directory
+    Set-Location -Path $originalDir
 }
 
 function cleanBuild
 {
-    . ./clean.ps1
+    $cleanPath = "$scriptDir\clean.ps1"
+    & $cleanPath
+    Write-Host "Clean Finished.. Rebuilding project." -ForegroundColor Magenta
 }
 
 function runBuild
 {
-    . ./run.ps1
-}
-
-function testOutput
-{
-    . ./test.ps1
+    $runPath = "$scriptDir\run.ps1"
+    $flag = $true
+    & $runPath -d:$flag 
+    Write-Host "Standard Run Finished." -ForegroundColor Magenta
 }
 
 # Locically number 1 to run.
@@ -83,13 +91,7 @@ catch
     exit 1
 }
 
-# Logically number 2 to run.
-if ($t)
-{
-    testOutput
-}
-
-# Run if requested after build.
+# If we want to do a simple test run, execute it now.
 if ($r)
 {
     runBuild
