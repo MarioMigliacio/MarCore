@@ -17,10 +17,10 @@
 /*
  * \brief Test file where output will be written
  */
-#define TEST_OUTPUT_FILE "../test/dump/last_test_output.txt"
+#define TEST_OUTPUT_FILE "last_test_output.txt"
 
 /*
- * \brief Global File pointer
+ * \brief File pointer
  */
 static FILE *test_output_stream = NULL;
 

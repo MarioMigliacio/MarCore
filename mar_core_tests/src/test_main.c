@@ -8,7 +8,8 @@
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mar_core_test.h"
+#include "mar_core_test.h"      // Example of a test module
+#include "mar_core_log.h"       // TODO:
 
 /*
  * \brief main application entry point
