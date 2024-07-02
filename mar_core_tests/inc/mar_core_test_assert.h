@@ -13,7 +13,7 @@
 #ifndef MAR_CORE_TEST_ASSERT_H
 #define MAR_CORE_TEST_ASSERT_H
 
-#include "mar_core_test_file.h"
+#include "mar_core_test_file.h" // PRINT_TO_FILE
 #include <inttypes.h>           // handle 64 bit sizes in format strings without warning
 #include <string.h>             // strncmp
 #include <math.h>               // fabs (absolute value floating point)

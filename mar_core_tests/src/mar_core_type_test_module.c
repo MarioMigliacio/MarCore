@@ -15,6 +15,9 @@
 /* ********************************************************************************************* */
 
 #include "mar_core_test.h"
+#include "mar_core_type.h"
+#include "mar_core_test_file.h"
+#include "mar_core_test_assert.h"
 
 /*
  * \brief Test type Unsigned Max Values Are Expected

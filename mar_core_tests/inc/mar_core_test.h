@@ -11,10 +11,6 @@
 #ifndef MAR_CORE_TEST_H
 #define MAR_CORE_TEST_H
 
-#include "mar_core_type.h"
-#include "mar_core_test_file.h"
-#include "mar_core_test_assert.h"
-
 /*
  * \brief Test type Unsigned Max Values Are Expected
  *
@@ -49,6 +45,8 @@ void Test_mar_core_type_SignedMaxValuesAreExpected(void);
  * \details Package all the mar core type unit tests
  */
 void Run_Test_Module_Mar_Core_Type(void);
+
+// TODO: add tests for bit packing
 
 /*
  * \brief Run All Tests runs every module that has defined unit tests.
