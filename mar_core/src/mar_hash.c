@@ -24,7 +24,6 @@
  */
 #define HASH_SHIFT 5
 
-
 /*
  * \brief HashNode is an internal structure to making a HashMap data type.
  */
@@ -34,7 +33,6 @@ typedef struct HashNode
     void *value;                // \brief Element in HashMap is referred to as a Key/Value combination of type <string, void*>
     struct HashNode *next;      // \brief Next is a single linked list of type Key/Value/Next* type.
 } HashNode;
-
 
 /*
  * \brief HashMap Data type represents a key/value combination of any type of data, keyed by string.
@@ -82,7 +80,7 @@ HashNode* create_node(const char* key, void* value)
         return NULL;
     }
 
-    HashNode* node = (HashNode*)calloc(1, sizeof(HashNode));
+    HashNode* node = (HashNode*)malloc(sizeof(HashNode));
 
     if (node)
     {
@@ -145,7 +143,7 @@ u8 hashmap_insert(HashMap *map, const char *key, void *value)
     }
 
     u64 index = hash_function(key, map->size);
-    HashNode *new_node = (HashNode*)malloc(sizeof(HashNode));  // not concerned with specific allocations yet
+    HashNode *new_node = create_node(key, value);
 
     if (!new_node)
     {
