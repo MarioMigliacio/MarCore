@@ -37,15 +37,17 @@
 /*
  * \brief Enumeration for log levels
  */
-typedef enum {
-    LOG_LEVEL_DEBUG,
-    LOG_LEVEL_INFO,
-    LOG_LEVEL_WARNING,
-    LOG_LEVEL_ERROR
+typedef enum 
+{
+    LOG_LEVEL_DEBUG,                // \brief Debugging level
+    LOG_LEVEL_INFO,                 // \brief Informational level
+    LOG_LEVEL_WARNING,              // \brief Warning level
+    LOG_LEVEL_ERROR                 // \brief Error level
 } LogLevel;
 
 /*
  * \brief Open the LOG_OUTPUT_FILE for write mode
+ * \returns int: errorcode -1 to stderr if unable to make log file
  */
 int log_init();
 
@@ -57,8 +59,8 @@ void log_close();
 /*
  * \brief Log a message with a specific log level
  *
- * \param lvl LogLevel
- * \param fmt Format string for printing
+ * \param lvl: LogLevel
+ * \param fmt: Format string for printing
  */
 void log_message(LogLevel lvl, const char *fmt, ...);
 

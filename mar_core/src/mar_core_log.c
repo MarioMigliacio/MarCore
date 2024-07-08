@@ -22,21 +22,18 @@
  */
 static FILE *log_output_stream = NULL;
 
-/*
- * \brief Open the LOG_OUTPUT_FILE for write mode
- */
-int log_init() {
+int log_init()
+{
     if (fopen_s(&log_output_stream, LOG_OUTPUT_FILE, "w") != 0) // Use "w" to overwrite the file each run
     { 
         perror("Failed to open log file");
+        
         return -1;
     }
+
     return 0;
 }
 
-/*
- * \brief Close the LOG_OUTPUT_FILE
- */
 void log_close()
 {
     if (log_output_stream != NULL)
@@ -46,14 +43,6 @@ void log_close()
     }
 }
 
-/*
- * \brief Log a message with a specific log level
- *
- * \details This is just the implementation of log_message, user is meant to use the 
- *          DEFINE MACROS for LOG_DEBUG, LOG_INFO, LOG_ERROR etc. 
- * \param lvl LogLevel
- * \param fmt Format string for printing
- */
 void log_message(LogLevel lvl, const char *format, ...)
 {
     if (log_output_stream == NULL)

@@ -16,10 +16,10 @@
  *
  * \details Will probably add support to leverage argc, and argv at some point
  *
- * \param argc: int, count of arguments
- * \param argv: char**, array of input commands
+ * \param argc: count of arguments
+ * \param argv: array of input commands
  * 
- * \return int: status code if relevent
+ * \return int: status code
  */
 int main(int argc, char* argv[])
 {
