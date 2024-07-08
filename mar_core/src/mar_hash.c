@@ -95,7 +95,7 @@ HashNode* create_node(const char* key, void* value)
             {
                 free(node->key);
                 free(node);
-                return NULL;
+                return NULL;    // Error copying key into a node->key value, remove any memory allocated so far
             }
 
             node->key[key_len] = '\0';
@@ -103,13 +103,13 @@ HashNode* create_node(const char* key, void* value)
         else
         {
             free(node);
-            return NULL;
+            return NULL;        // Unrecoverable memory allocation, remove any memory allocated so far
         }
 
         node->value = value;
     }
 
-    return node;
+    return node;                // This node was good, return non null data
 }
 
 HashMap* hashmap_init(u64 size)
@@ -127,12 +127,12 @@ HashMap* hashmap_init(u64 size)
     {
         free(map);
 
-        return NULL;
+        return NULL;    // Unrecoverable memory allocation, remove any memory allocated so far
     }
 
     map->size = size;
 
-    return map;
+    return map;         // Hashmap init was successful
 }
 
 u8 hashmap_insert(HashMap *map, const char *key, void *value)
@@ -147,23 +147,23 @@ u8 hashmap_insert(HashMap *map, const char *key, void *value)
 
     if (!new_node)
     {
-        return FALSE;
+        return FALSE;               // Create Node failed, do nothing
     }
 
-    new_node->key = _strdup(key);      // _strdup syscall - "I promise to free this memory." - mario
+    new_node->key = _strdup(key);   // _strdup syscall - "I promise to free this memory." - mario
 
     if (!new_node->key)
     {
         free(new_node);
 
-        return FALSE;
+        return FALSE;               // Unrecoverable memory allocation, remove any memory allocated so far
     }
 
     new_node->value = value;
     new_node->next = map->buckets[index];
     map->buckets[index] = new_node;
 
-    return TRUE;
+    return TRUE;                    // Hashmap insert was successful
 }
 
 void* hashmap_lookup(const HashMap *map, const char *key)
@@ -182,13 +182,13 @@ void* hashmap_lookup(const HashMap *map, const char *key)
 
         if (strncmp(node->key, key, key_len) == 0)
         {
-            return node->value;                     // The correct key was identified, return not null
+            return node->value;     // The correct key was identified, return not null
         }
 
         node = node->next;
     }
 
-    return NULL;
+    return NULL;                    // No Key in HashMap
 }
 
 u8 hashmap_remove_at(HashMap *map, const char *key)
@@ -227,7 +227,7 @@ u8 hashmap_remove_at(HashMap *map, const char *key)
         node = node->next;
     }
 
-    return FALSE;
+    return FALSE;           // No Key in HashMap
 }
 
 void hashmap_free(HashMap *map)
@@ -246,10 +246,10 @@ void hashmap_free(HashMap *map)
             HashNode *temp = node;
             node = node->next;
             free(node->key);
-            free(node);
+            free(node);             // A key was set free
         }
     }
 
     free(map->buckets);
-    free(map);
+    free(map);                      // Everything in HashMap is free
 }
