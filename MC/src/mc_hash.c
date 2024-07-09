@@ -1,30 +1,30 @@
 /* ********************************************************************************************* */
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
-/* @file: mar_hash.c                                                                             */
+/* @file: mc_hash.c                                                                              */
 /* \brief: Provide a hash-like data structure                                                    */
 /*                                                                                               */
-/* \Expects: No expectations are made prior to type definitions in this file                     */
+/* \Expects: mc_hash.h is linked properly and defines interface                                  */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mar_hash.h"
+#include "mc_hash.h"
 #include <stdlib.h>     // malloc
 #include <string.h>     // _strdup
 
-/*
+/**
  * \brief Magic number used in the djb2 hash function, which is a
  * popular and effective hash function created by Daniel J. Bernstein.
  */
 #define HASH_SEED 5381
 
-/*
+/**
  * \brief The number 32 is used because it is a simple yet effective multiplier that 
  * helps to spread the hash values uniformly, reducing the likelihood of collisions.
  */
 #define HASH_SHIFT 5
 
-/*
+/**
  * \brief HashNode is an internal structure to making a HashMap data type.
  */
 typedef struct HashNode
@@ -34,16 +34,16 @@ typedef struct HashNode
     struct HashNode *next;      // \brief Next is a single linked list of type Key/Value/Next* type.
 } HashNode;
 
-/*
+/**
  * \brief HashMap Data type represents a key/value combination of any type of data, keyed by string.
  */
-struct HashMap
+struct MC_HashMap
 {
     HashNode **buckets; // \brief A pointer to the base Address of the starting HashNode array
     u64 size;           // \brief The size allocated for this HashMap
 };
 
-/*
+/**
  * \brief A function which provides semi unique buckets for keys.
  *
  * \details - INTERNAL FUNCTION, NOT EXPOSED PUBLICLY
@@ -53,7 +53,7 @@ struct HashMap
  * distribute keys uniformly across the hash table to minimize collisions,
  * where multiple keys hash to the same index.
  */
-static u64 hash_function(const char *str, u64 size)
+static u64 internal_hash_function(const char *str, u64 size)
 {
     u64 hash = HASH_SEED;
     int c;
@@ -66,14 +66,14 @@ static u64 hash_function(const char *str, u64 size)
     return hash % size; // an index appropriate location to emplace.
 }
 
-/*
+/**
  * \brief A function which creates a dynamic allocated pointer to a HashNode
  *
  * \details - INTERNAL FUNCTION, NOT EXPOSED PUBLICLY
  * The create_node in a hashmap is used to generate a HashNode object and return a pointer to it
  * and return a pointer to it.
  */
-HashNode* create_node(const char* key, void* value)
+HashNode* internal_create_node(const char* key, void* value)
 {
     if (!key)
     {
@@ -112,9 +112,9 @@ HashNode* create_node(const char* key, void* value)
     return node;                // This node was good, return non null data
 }
 
-HashMap* hashmap_init(u64 size)
+MC_HashMap* MC_Hashmap_Init(u64 size)
 {
-    HashMap *map = (HashMap*)malloc(sizeof(HashMap));
+    MC_HashMap *map = (MC_HashMap*)malloc(sizeof(MC_HashMap));
 
     if (!map)
     {
@@ -135,15 +135,15 @@ HashMap* hashmap_init(u64 size)
     return map;         // Hashmap init was successful
 }
 
-u8 hashmap_insert(HashMap *map, const char *key, void *value)
+u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value)
 {
     if (!map || !key)
     {
         return FALSE;
     }
 
-    u64 index = hash_function(key, map->size);
-    HashNode *new_node = create_node(key, value);
+    u64 index = internal_hash_function(key, map->size);
+    HashNode *new_node = internal_create_node(key, value);
 
     if (!new_node)
     {
@@ -166,14 +166,14 @@ u8 hashmap_insert(HashMap *map, const char *key, void *value)
     return TRUE;                    // Hashmap insert was successful
 }
 
-void* hashmap_lookup(const HashMap *map, const char *key)
+void* MC_Hashmap_Search(const MC_HashMap *map, const char *key)
 {
     if (!map || !key)
     {
         return FALSE;
     }
 
-    u64 index = hash_function(key, map->size);
+    u64 index = internal_hash_function(key, map->size);
     HashNode *node = map->buckets[index];
 
     while (node)
@@ -191,14 +191,14 @@ void* hashmap_lookup(const HashMap *map, const char *key)
     return NULL;                    // No Key in HashMap
 }
 
-u8 hashmap_remove_at(HashMap *map, const char *key)
+u8 MC_Hashmap_RemoveAt(MC_HashMap *map, const char *key)
 {
     if (!map || !key)
     {
         return FALSE;
     }
 
-    u64 index = hash_function(key, map->size);
+    u64 index = internal_hash_function(key, map->size);
     HashNode *node = map->buckets[index];
     HashNode *prev = NULL;
 
@@ -230,7 +230,7 @@ u8 hashmap_remove_at(HashMap *map, const char *key)
     return FALSE;           // No Key in HashMap
 }
 
-void hashmap_free(HashMap *map)
+void MC_Hashmap_Free(MC_HashMap *map)
 {
     if (!map)
     {

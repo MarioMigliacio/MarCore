@@ -1,28 +1,28 @@
 /* ********************************************************************************************* */
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
-/* @file: mar_core_log.c                                                                         */
+/* @file: mc_log.c                                                                               */
 /* \brief: Implementation for simple logging utlity                                              */
 /*                                                                                               */
-/* \Expects: mar_core_log.h is linked properly and defines interface                             */
+/* \Expects: mc_log.h is linked properly and defines interface                                   */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mar_core_log.h"
+#include "mc_log.h"
 #include <stdarg.h>     // va_start
 #include <time.h>       // time_t
 
-/*
+/**
  * \brief Test file where output will be written
  */
 #define LOG_OUTPUT_FILE "last_run_output.txt"
 
-/*
+/**
  * \brief File pointer
  */
 static FILE *log_output_stream = NULL;
 
-int log_init()
+int MC_Log_Init()
 {
     if (fopen_s(&log_output_stream, LOG_OUTPUT_FILE, "w") != 0) // Use "w" to overwrite the file each run
     { 
@@ -34,7 +34,7 @@ int log_init()
     return 0;
 }
 
-void log_close()
+void MC_Log_Close()
 {
     if (log_output_stream != NULL)
     {
@@ -43,7 +43,7 @@ void log_close()
     }
 }
 
-void log_message(LogLevel lvl, const char *format, ...)
+void MC_Log_Message(LogLevel lvl, const char *format, ...)
 {
     if (log_output_stream == NULL)
     {
@@ -53,10 +53,10 @@ void log_message(LogLevel lvl, const char *format, ...)
     const char *level_str = NULL;
     switch (lvl)
     {
-        case LOG_LEVEL_DEBUG:   level_str = "DEBUG"; break;
-        case LOG_LEVEL_INFO:    level_str = "INFO"; break;
-        case LOG_LEVEL_WARNING: level_str = "WARNING"; break;
-        case LOG_LEVEL_ERROR:   level_str = "ERROR"; break;
+        case MC_LOG_LEVEL_DEBUG:   level_str = "DEBUG"; break;
+        case MC_LOG_LEVEL_INFO:    level_str = "INFO"; break;
+        case MC_LOG_LEVEL_WARNING: level_str = "WARNING"; break;
+        case MC_LOG_LEVEL_ERROR:   level_str = "ERROR"; break;
         default:                level_str = "UNKNOWN"; break;
     }
 

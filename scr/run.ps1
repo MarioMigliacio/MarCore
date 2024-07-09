@@ -32,7 +32,7 @@ $projectRoot = (Resolve-Path "$scriptDir\..").Path
 $exeDir = "$projectRoot\build\bin\Debug"
 
 # Define the executable path
-$exePath = "$exeDir\mar_core_tests.exe"
+$exePath = "$exeDir\MC_test.exe"
 
 # Define the output file path and the dump directory
 $outputFile = "$exeDir\last_test_output.txt"
