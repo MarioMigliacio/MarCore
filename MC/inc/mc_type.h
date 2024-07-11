@@ -33,17 +33,17 @@
 #define U8_MAX UINT8_MAX
 
 /**
- * \brief represents the maximum 16 bit unsigned value: 65535
+ * \brief represents the maximum 16 bit unsigned value: 65,535
  */
 #define U16_MAX UINT16_MAX
 
 /**
- * \brief represents the maximum 32 bit unsigned value: 4294967295
+ * \brief represents the maximum 32 bit unsigned value: 4,294,967,295
  */
 #define U32_MAX UINT32_MAX
 
 /**
- * \brief represents the maximum 64 bit unsigned value: 18446744073709551615
+ * \brief represents the maximum 64 bit unsigned value: 18,446,744,073,709,551,615
  */
 #define U64_MAX UINT64_MAX
 
@@ -53,7 +53,7 @@
 #define I8_MIN INT8_MIN
 
 /**
- * \brief represents the minimum 16 bit signed value: -32768
+ * \brief represents the minimum 16 bit signed value: -32,768
  */
 #define I16_MIN INT16_MIN
 

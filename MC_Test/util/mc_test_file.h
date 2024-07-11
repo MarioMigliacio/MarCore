@@ -27,9 +27,9 @@ static FILE *test_output_stream = NULL;
 /**
  * \brief Open the TEST_OUTPUT_FILE for write mode
  */
-#define OPEN_TEST_OUTPUT_FILE() \
+#define OPEN_TEST_OUTPUT_FILE(mode) \
 do { \
-    if (fopen_s(&test_output_stream, TEST_OUTPUT_FILE, "w") != 0) { \
+    if (fopen_s(&test_output_stream, TEST_OUTPUT_FILE, mode) != 0) { \
         perror("Failed to open test output file"); \
         exit(EXIT_FAILURE); \
     } \

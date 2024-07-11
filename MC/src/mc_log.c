@@ -57,7 +57,7 @@ void MC_Log_Message(LogLevel lvl, const char *format, ...)
         case MC_LOG_LEVEL_INFO:    level_str = "INFO"; break;
         case MC_LOG_LEVEL_WARNING: level_str = "WARNING"; break;
         case MC_LOG_LEVEL_ERROR:   level_str = "ERROR"; break;
-        default:                level_str = "UNKNOWN"; break;
+        default:                   level_str = "UNKNOWN"; break;
     }
 
     // Get current time

@@ -7,6 +7,7 @@ project(MC_Test C)
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/../MC/inc)
 include_directories(${PROJECT_SOURCE_DIR}/inc)
+include_directories(${PROJECT_SOURCE_DIR}/util)
 
 # Source files
 file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.c")

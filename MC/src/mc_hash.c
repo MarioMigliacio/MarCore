@@ -11,6 +11,7 @@
 #include "mc_hash.h"
 #include <stdlib.h>     // malloc
 #include <string.h>     // _strdup
+#include <stdio.h>      // printf
 
 /**
  * \brief Magic number used in the djb2 hash function, which is a
@@ -31,6 +32,7 @@ typedef struct HashNode
 {
     char *key;                  // \brief Element in HashMap is referred to as a Key/Value combination of type <string, void*>
     void *value;                // \brief Element in HashMap is referred to as a Key/Value combination of type <string, void*>
+    u8 isDynamic;               // \brief Element is created with dyanmic memory and needs to be freed, TRUE / FALSE.
     struct HashNode *next;      // \brief Next is a single linked list of type Key/Value/Next* type.
 } HashNode;
 
@@ -63,53 +65,7 @@ static u64 internal_hash_function(const char *str, u64 size)
         hash = ((hash << HASH_SHIFT) + hash) + c;   // 32 + hash = 33 multiplier, plus constant. Even distribution
     }
 
-    return hash % size; // an index appropriate location to emplace.
-}
-
-/**
- * \brief A function which creates a dynamic allocated pointer to a HashNode
- *
- * \details - INTERNAL FUNCTION, NOT EXPOSED PUBLICLY
- * The create_node in a hashmap is used to generate a HashNode object and return a pointer to it
- * and return a pointer to it.
- */
-HashNode* internal_create_node(const char* key, void* value)
-{
-    if (!key)
-    {
-        return NULL;
-    }
-
-    HashNode* node = (HashNode*)malloc(sizeof(HashNode));
-
-    if (node)
-    {
-        u64 key_len = strlen(key);
-        node->key = (char*)malloc(key_len + 1);
-
-        if (node->key)
-        {
-            errno_t err = strncpy_s(node->key, key_len + 1, key, key_len);
-
-            if (err != 0)
-            {
-                free(node->key);
-                free(node);
-                return NULL;    // Error copying key into a node->key value, remove any memory allocated so far
-            }
-
-            node->key[key_len] = '\0';
-        }
-        else
-        {
-            free(node);
-            return NULL;        // Unrecoverable memory allocation, remove any memory allocated so far
-        }
-
-        node->value = value;
-    }
-
-    return node;                // This node was good, return non null data
+    return hash % size;
 }
 
 MC_HashMap* MC_Hashmap_Init(u64 size)
@@ -121,21 +77,21 @@ MC_HashMap* MC_Hashmap_Init(u64 size)
         return NULL;
     }
 
-    map->buckets = (HashNode**)calloc(size, sizeof(HashNode*));
+    map->buckets = (HashNode**)calloc(sizeof(HashNode*), size);
 
     if (!map->buckets)
     {
         free(map);
 
-        return NULL;    // Unrecoverable memory allocation, remove any memory allocated so far
+        return NULL;
     }
 
     map->size = size;
 
-    return map;         // Hashmap init was successful
+    return map;
 }
 
-u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value)
+u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value, const u8 dynamic)
 {
     if (!map || !key)
     {
@@ -143,27 +99,40 @@ u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value)
     }
 
     u64 index = internal_hash_function(key, map->size);
-    HashNode *new_node = internal_create_node(key, value);
+    HashNode *new_node = map->buckets[index];
 
+    while (new_node != NULL)
+    {
+        if (strncmp(new_node->key, key, strlen(key)) == 0)  // key already exists, update value and dynamic flag
+        {
+            if (new_node->isDynamic)
+            {
+                free(new_node->value);
+            }
+
+            new_node->value = value;
+            new_node->isDynamic = dynamic;
+
+            return TRUE;
+        }
+
+        new_node = new_node->next;
+    }
+
+    new_node = (HashNode *)malloc(sizeof(HashNode));    // Key didn't exist, create new HashNode and insert it
+    
     if (!new_node)
     {
-        return FALSE;               // Create Node failed, do nothing
+        return FALSE;
     }
 
     new_node->key = _strdup(key);   // _strdup syscall - "I promise to free this memory." - mario
-
-    if (!new_node->key)
-    {
-        free(new_node);
-
-        return FALSE;               // Unrecoverable memory allocation, remove any memory allocated so far
-    }
-
     new_node->value = value;
+    new_node->isDynamic = dynamic;
     new_node->next = map->buckets[index];
     map->buckets[index] = new_node;
 
-    return TRUE;                    // Hashmap insert was successful
+    return TRUE;
 }
 
 void* MC_Hashmap_Search(const MC_HashMap *map, const char *key)
@@ -178,17 +147,15 @@ void* MC_Hashmap_Search(const MC_HashMap *map, const char *key)
 
     while (node)
     {
-        u64 key_len = strlen(key);
-
-        if (strncmp(node->key, key, key_len) == 0)
+        if (strncmp(node->key, key, strlen(key)) == 0)
         {
-            return node->value;     // The correct key was identified, return not null
+            return node->value;
         }
 
         node = node->next;
     }
 
-    return NULL;                    // No Key in HashMap
+    return NULL;
 }
 
 u8 MC_Hashmap_RemoveAt(MC_HashMap *map, const char *key)
@@ -204,9 +171,8 @@ u8 MC_Hashmap_RemoveAt(MC_HashMap *map, const char *key)
 
     while (node)
     {
-        u64 key_len = strlen(key);
-
-        if (strncmp(node->key, key, key_len) == 0)
+        /* this check is incase something else hashed to the same index, but was not the 'key' being searched */
+        if (strncmp(node->key, key, strlen(key)) == 0)
         {
             if (prev)
             {
@@ -217,25 +183,32 @@ u8 MC_Hashmap_RemoveAt(MC_HashMap *map, const char *key)
                 map->buckets[index] = node->next;
             }
 
+            if (node->isDynamic)
+            {
+                free(node->value);
+            }
+
             free(node->key);
             free(node);
 
-            return TRUE;    // The correct key has been removed, bucket at index shifted.
+            return TRUE;
         }
 
         prev = node;
         node = node->next;
     }
 
-    return FALSE;           // No Key in HashMap
+    return FALSE;
 }
 
-void MC_Hashmap_Free(MC_HashMap *map)
+void MC_Hashmap_Free(MC_HashMap **map_ptr)
 {
-    if (!map)
+    if (!(map_ptr) || !(*map_ptr))
     {
         return;
     }
+
+    MC_HashMap *map = *map_ptr;
 
     for (u64 i = 0; i < map->size; i++)
     {
@@ -243,13 +216,52 @@ void MC_Hashmap_Free(MC_HashMap *map)
 
         while (node)
         {
-            HashNode *temp = node;
-            node = node->next;
+            HashNode *next = node->next;
+
+            if (node->isDynamic)
+            {
+                free(node->value);
+            }
+
             free(node->key);
-            free(node);             // A key was set free
+            free(node);
+
+            node = next;
         }
+
+        map->buckets[i] = NULL;
     }
 
     free(map->buckets);
-    free(map);                      // Everything in HashMap is free
+    free(map);
+
+    *map_ptr = NULL;
+}
+
+void MC_Hashmap_Print(const MC_HashMap *map)
+{
+    printf("Start Table\n");
+
+    for (u64 i = 0; i < map->size; i++)
+    {
+        if (map->buckets[i] == NULL)
+        {
+            printf("\t%lld\t---\n", i);
+        }
+        else
+        {
+            printf("\t%lld\t", i);
+
+            HashNode *node = map->buckets[i];
+            while (node != NULL)
+            {
+                printf("\"%s\"(%p) - ", node->key, node->value);
+                node = node->next;
+            }
+
+            printf("\n");
+        }
+    }
+
+    printf("End Table\n");
 }

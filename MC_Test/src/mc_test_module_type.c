@@ -8,20 +8,18 @@
 /*                                                                                               */
 /*           Unit tests should follow a step by step approach and be specific to the             */
 /*           name of the function which they are evoked.                                         */
-/*           1. Setup - Stage the entities to be tested on                                       */
+/*           1. Arrange - Stage the entities to be tested on                                     */
 /*           2. Act - If necessary, perform any routines that might be necessary                 */
 /*           3. Assert - Determine if expectations are met for the test                          */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mc_test.h"
 #include "mc_type.h"
-#include "mc_test_file.h"
 #include "mc_test_assert.h"
 
 void Test_MC_Type_UintMaxValsCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     u8 maxU8   =  U8_MAX;
     u16 maxU16 = U16_MAX;
     u32 maxU32 = U32_MAX;
@@ -38,7 +36,7 @@ void Test_MC_Type_UintMaxValsCorrect(void)
 
 void Test_MC_Type_UintMaxOverflowCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     u8 maxU8   =  U8_MAX;
     u16 maxU16 = U16_MAX;
     u32 maxU32 = U32_MAX;
@@ -59,7 +57,7 @@ void Test_MC_Type_UintMaxOverflowCorrect(void)
 
 void Test_MC_Type_IntMinValsCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     i8 minI8   =  I8_MIN;
     i16 minI16 = I16_MIN;
     i32 minI32 = I32_MIN;
@@ -76,7 +74,7 @@ void Test_MC_Type_IntMinValsCorrect(void)
 
 void Test_MC_Type_IntMaxValsCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     i8 maxI8   =  I8_MAX;
     i16 maxI16 = I16_MAX;
     i32 maxI32 = I32_MAX;
@@ -93,19 +91,13 @@ void Test_MC_Type_IntMaxValsCorrect(void)
 
 void Test_MC_Module_Type(void)
 {
+    /* Safekeeping with global file pointer */
+    OPEN_TEST_OUTPUT_FILE("a");
+
     Test_MC_Type_UintMaxValsCorrect();
     Test_MC_Type_UintMaxOverflowCorrect();
     Test_MC_Type_IntMinValsCorrect();
     Test_MC_Type_IntMaxValsCorrect();
-}
-
-void Run_All_Tests(void)
-{
-    /* Safekeeping with global file pointer */
-    OPEN_TEST_OUTPUT_FILE();
-
-    /* Add each Run_Test_Module here */
-    Test_MC_Module_Type();
 
     /* Safekeeping with global file pointer */
     CLOSE_TEST_OUTPUT_FILE();
