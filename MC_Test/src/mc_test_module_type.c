@@ -1,32 +1,25 @@
 /* ********************************************************************************************* */
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
-/* @file: mar_core_type_test_module.c                                                            */
-/* \brief: Source code for testing mar_core_type                                                 */
+/* @file: mc_test_module_type.c                                                                  */
+/* \brief: Source code for testing mc_type                                                       */
 /*                                                                                               */
-/* \Expects: mar_core_type definitions are defined and linked properly                           */
+/* \Expects: 1. All necessary mc definitions are defined and linked properly                     */
 /*                                                                                               */
 /*           Unit tests should follow a step by step approach and be specific to the             */
 /*           name of the function which they are evoked.                                         */
-/*           1. Setup - Stage the entities to be tested on                                       */
+/*           1. Arrange - Stage the entities to be tested on                                     */
 /*           2. Act - If necessary, perform any routines that might be necessary                 */
 /*           3. Assert - Determine if expectations are met for the test                          */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mar_core_test.h"
-#include "mar_core_type.h"
-#include "mar_core_test_file.h"
-#include "mar_core_test_assert.h"
+#include "mc_type.h"
+#include "mc_test_assert.h"
 
-/*
- * \brief Test type Unsigned Max Values Are Expected
- *
- * \details Stress the type definitions and values
- */
-void Test_mar_core_type_UnsignedMaxValuesAreExpected(void)
+void Test_MC_Type_UintMaxValsCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     u8 maxU8   =  U8_MAX;
     u16 maxU16 = U16_MAX;
     u32 maxU32 = U32_MAX;
@@ -41,14 +34,9 @@ void Test_mar_core_type_UnsignedMaxValuesAreExpected(void)
     ASSERT_EQUAL_UINT64(maxU64, UINT64_MAX);
 }
 
-/*
- * \brief Test type Unsigned Overflow Expected
- *
- * \details Stress the type definitions and values
- */
-void Test_mar_core_type_UnsignedOverflowExpected(void)
+void Test_MC_Type_UintMaxOverflowCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     u8 maxU8   =  U8_MAX;
     u16 maxU16 = U16_MAX;
     u32 maxU32 = U32_MAX;
@@ -67,14 +55,9 @@ void Test_mar_core_type_UnsignedOverflowExpected(void)
     ASSERT_NOT_EQUAL_UINT64(maxU64, UINT64_MAX);
 }
 
-/*
- * \brief Test type Signed Min Values Are Expected
- *
- * \details Stress the type definitions and values
- */
-void Test_mar_core_type_SignedMinValuesAreExpected(void)
+void Test_MC_Type_IntMinValsCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     i8 minI8   =  I8_MIN;
     i16 minI16 = I16_MIN;
     i32 minI32 = I32_MIN;
@@ -89,14 +72,9 @@ void Test_mar_core_type_SignedMinValuesAreExpected(void)
     ASSERT_EQUAL_INT64(minI64, INT64_MIN);
 }
 
-/*
- * \brief Test type Signed Max Values Are Expected
- *
- * \details Stress the type definitions and values
- */
-void Test_mar_core_type_SignedMaxValuesAreExpected(void)
+void Test_MC_Type_IntMaxValsCorrect(void)
 {
-    /* Setup */
+    /* Arrange */
     i8 maxI8   =  I8_MAX;
     i16 maxI16 = I16_MAX;
     i32 maxI32 = I32_MAX;
@@ -111,29 +89,15 @@ void Test_mar_core_type_SignedMaxValuesAreExpected(void)
     ASSERT_EQUAL_INT64(maxI64, INT64_MAX);
 }
 
-/*
- * \brief Main exposed module for all unit tests of type mario_core_type
- *
- * \details Package all the mar core type unit tests
- */
-void Run_Test_Module_Mar_Core_Type(void)
-{
-    Test_mar_core_type_UnsignedMaxValuesAreExpected();
-    Test_mar_core_type_UnsignedOverflowExpected();
-    Test_mar_core_type_SignedMinValuesAreExpected();
-    Test_mar_core_type_SignedMaxValuesAreExpected();
-}
-
-/*
- * \brief Run All Tests runs every module that has defined unit tests.
- */
-void Run_All_Tests(void)
+void Test_MC_Module_Type(void)
 {
     /* Safekeeping with global file pointer */
-    OPEN_TEST_OUTPUT_FILE();
+    OPEN_TEST_OUTPUT_FILE("a");
 
-    /* Add each Run_Test_Module here */
-    Run_Test_Module_Mar_Core_Type();
+    Test_MC_Type_UintMaxValsCorrect();
+    Test_MC_Type_UintMaxOverflowCorrect();
+    Test_MC_Type_IntMinValsCorrect();
+    Test_MC_Type_IntMaxValsCorrect();
 
     /* Safekeeping with global file pointer */
     CLOSE_TEST_OUTPUT_FILE();

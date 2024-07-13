@@ -2,23 +2,24 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Project name
-project(mar_core_tests C)
+project(MC_Test C)
 
 # Include directories
-include_directories(${PROJECT_SOURCE_DIR}/../mar_core/inc)
+include_directories(${PROJECT_SOURCE_DIR}/../MC/inc)
 include_directories(${PROJECT_SOURCE_DIR}/inc)
+include_directories(${PROJECT_SOURCE_DIR}/util)
 
 # Source files
 file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.c")
 
 # Create the executable
-add_executable(mar_core_tests ${SOURCES})
+add_executable(MC_Test ${SOURCES})
 
-# Link with the mar_core library
-target_link_libraries(mar_core_tests mar_core)
+# Link with the MC library
+target_link_libraries(MC_Test MC)
 
 # Set the output directory for the library
-set_target_properties(mar_core_tests PROPERTIES
+set_target_properties(MC_Test PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
@@ -26,5 +27,5 @@ set_target_properties(mar_core_tests PROPERTIES
 
 # Add /Zf compiler option if using MSVC
 if(MSVC)
-    target_compile_options(mar_core PRIVATE /Zf)
+    target_compile_options(MC_Test PRIVATE /Zf)
 endif()

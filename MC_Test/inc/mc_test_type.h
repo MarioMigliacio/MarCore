@@ -1,56 +1,51 @@
 /* ********************************************************************************************* */
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
-/* @file: mar_core_test.h                                                                        */
+/* @file: mc_test.h                                                                              */
 /* \brief: Header collection with function prototypes for testing                                */
 /*                                                                                               */
-/* \Expects: mar_core_test definitions are defined and linked properly                           */
+/* \Expects: mc_test definitions are defined and linked properly                                */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#ifndef MAR_CORE_TEST_H
-#define MAR_CORE_TEST_H
+#ifndef MC_TEST_TYPE_H
+#define MC_TEST_TYPE_H
 
-/*
- * \brief Test type Unsigned Max Values Are Expected
+/**
+ * \brief Test type Unsigned Max Values Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_mar_core_type_UnsignedMaxValuesAreExpected(void);
+void Test_MC_Type_UintMaxValsCorrect(void);
 
-/*
+/**
  * \brief Test type Unsigned Overflow Expected
  *
  * \details Stress the type definitions and values
  */
-void Test_mar_core_type_UnsignedOverflowExpected(void);
+void Test_MC_Type_UintMaxOverflowCorrect(void);
 
-/*
- * \brief Test type Signed Min Values Are Expected
+/**
+ * \brief Test type Signed Min Values Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_mar_core_type_SignedMinValuesAreExpected(void);
+void Test_MC_Type_IntMinValsCorrect(void);
 
-/*
- * \brief Test type Signed Max Values Are Expected
+/**
+ * \brief Test type Signed Max Values Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_mar_core_type_SignedMaxValuesAreExpected(void);
+void Test_MC_Type_IntMaxValsCorrect(void);
 
-/*
- * \brief Main exposed module for all unit tests of type mario_core_type
+/**
+ * \brief Main exposed module for all unit tests of type MC_type
  *
  * \details Package all the mar core type unit tests
  */
-void Run_Test_Module_Mar_Core_Type(void);
+void Test_MC_Module_Type(void);
 
-// TODO: add tests for bit packing
 
-/*
- * \brief Run All Tests runs every module that has defined unit tests.
- */
-void Run_All_Tests(void);
 
 #endif

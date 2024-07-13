@@ -5,5 +5,5 @@ cmake_minimum_required(VERSION 3.10)
 project(MarCore)
 
 # Add subdirectories
-add_subdirectory(mar_core)
-add_subdirectory(mar_core_tests)
+add_subdirectory(MC)
+add_subdirectory(MC_Test)
