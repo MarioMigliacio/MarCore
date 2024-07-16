@@ -40,12 +40,38 @@ void Test_MC_Type_IntMinValsCorrect(void);
 void Test_MC_Type_IntMaxValsCorrect(void);
 
 /**
+ * \brief Test type Setting bits Are Correct
+ *
+ * \details Stress the type definitions and values
+ */
+void Test_MC_Type_SetBitCorrect(void);
+
+/**
+ * \brief Test type Clearing bits Are Correct
+ *
+ * \details Stress the type definitions and values
+ */
+void Test_MC_Type_ClearBitCorrect(void);
+
+/**
+ * \brief Test type Toggle bits Are Correct
+ *
+ * \details Stress the type definitions and values
+ */
+void Test_MC_Type_ToggleBitCorrect(void);
+
+/**
+ * \brief Test type Bit mask boolean Is Correct
+ *
+ * \details Stress the type definitions and values
+ */
+void Test_MC_Type_IsBitSetCorrect(void);
+
+/**
  * \brief Main exposed module for all unit tests of type MC_type
  *
  * \details Package all the mar core type unit tests
  */
 void Test_MC_Module_Type(void);
-
-
 
 #endif
