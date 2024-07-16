@@ -94,22 +94,22 @@
 /**
  * \brief Sets the bit 'val' at position 'pos'
  */
-#define SET_BIT(val, pos) ((val) |= (1U << (pos)))
+#define SET_BIT(val, pos) ((val) |= (1LL << (pos)))
 
 /**
 * \brief Clears the bit 'val' at position 'pos'
 */
-#define CLEAR_BIT(val, pos) ((val) &= ~(1U << (pos)))
+#define CLEAR_BIT(val, pos) ((val) &= ~(1LL << (pos)))
 
 /**
 * \brief Changes the bit 'val' at position 'pos' from 0 to 1, or 1 to 0
 */
-#define TOGGLE_BIT(val, pos) ((val) ^= (1U << (pos)))
+#define TOGGLE_BIT(val, pos) ((val) ^= (1LL << (pos)))
 
 /**
 * \brief Returns the truth value of if the bit 'val' at position 'pos' is 1
 */
-#define IS_BIT_SET(val, pos) (((val) & (1U << (pos))) != 0)
+#define IS_BIT_SET(val, pos) (((val) & (1LL << (pos))) != 0)
 
 
 /**
@@ -117,70 +117,70 @@
  * many variables or options into one single u64.
  */
 
-#define MASK_0                  0x1
-#define MASK_1                  0x2
-#define MASK_2                  0x4
-#define MASK_3                  0x8
-#define MASK_4                 0x10
-#define MASK_5                 0x20
-#define MASK_6                 0x40
-#define MASK_7                 0x80
-#define MASK_8                0x100
-#define MASK_9                0x200
-#define MASK_10               0x400
-#define MASK_11               0x800
-#define MASK_12              0x1000
-#define MASK_13              0x2000
-#define MASK_14              0x4000
-#define MASK_15              0x8000
-#define MASK_16             0x10000
-#define MASK_17             0x20000
-#define MASK_18             0x40000
-#define MASK_19             0x80000
-#define MASK_20            0x100000
-#define MASK_21            0x200000
-#define MASK_22            0x400000
-#define MASK_23            0x800000
-#define MASK_24           0x1000000
-#define MASK_25           0x2000000
-#define MASK_26           0x4000000
-#define MASK_27           0x8000000
-#define MASK_28          0x10000000
-#define MASK_29          0x20000000
-#define MASK_30          0x40000000
-#define MASK_31          0x80000000
-#define MASK_32         0x100000000
-#define MASK_33         0x200000000
-#define MASK_34         0x400000000
-#define MASK_35         0x800000000
-#define MASK_36        0x1000000000
-#define MASK_37        0x2000000000
-#define MASK_38        0x4000000000
-#define MASK_39        0x8000000000
-#define MASK_40       0x10000000000
-#define MASK_41       0x20000000000
-#define MASK_42       0x40000000000
-#define MASK_43       0x80000000000
-#define MASK_44      0x100000000000
-#define MASK_45      0x200000000000
-#define MASK_46      0x400000000000
-#define MASK_47      0x800000000000
-#define MASK_48     0x1000000000000
-#define MASK_49     0x2000000000000
-#define MASK_50     0x4000000000000
-#define MASK_51     0x8000000000000
-#define MASK_52    0x10000000000000
-#define MASK_53    0x20000000000000
-#define MASK_54    0x40000000000000
-#define MASK_55    0x80000000000000
-#define MASK_56   0x100000000000000
-#define MASK_57   0x200000000000000
-#define MASK_58   0x400000000000000
-#define MASK_59   0x800000000000000
-#define MASK_60  0x1000000000000000
-#define MASK_61  0x2000000000000000
-#define MASK_62  0x4000000000000000
-#define MASK_63  0x8000000000000000
+#define MASK_0  0x0
+#define MASK_1  0x1
+#define MASK_2  0x3
+#define MASK_3  0x7
+#define MASK_4  0xF
+#define MASK_5  0x1F
+#define MASK_6  0x3F
+#define MASK_7  0x7F
+#define MASK_8  0xFF
+#define MASK_9  0x1FF
+#define MASK_10 0x3FF
+#define MASK_11 0x7FF
+#define MASK_12 0xFFF
+#define MASK_13 0x1FFF
+#define MASK_14 0x3FFF
+#define MASK_15 0x7FFF
+#define MASK_16 0xFFFF
+#define MASK_17 0x1FFFF
+#define MASK_18 0x3FFFF
+#define MASK_19 0x7FFFF
+#define MASK_20 0xFFFFF
+#define MASK_21 0x1FFFFF
+#define MASK_22 0x3FFFFF
+#define MASK_23 0x7FFFFF
+#define MASK_24 0xFFFFFF
+#define MASK_25 0x1FFFFFF
+#define MASK_26 0x3FFFFFF
+#define MASK_27 0x7FFFFFF
+#define MASK_28 0xFFFFFFF
+#define MASK_29 0x1FFFFFFF
+#define MASK_30 0x3FFFFFFF
+#define MASK_31 0x7FFFFFFF
+#define MASK_32 0xFFFFFFFF
+#define MASK_33 0x1FFFFFFFF
+#define MASK_34 0x3FFFFFFFF
+#define MASK_35 0x7FFFFFFFF
+#define MASK_36 0xFFFFFFFFF
+#define MASK_37 0x1FFFFFFFFF
+#define MASK_38 0x3FFFFFFFFF
+#define MASK_39 0x7FFFFFFFFF
+#define MASK_40 0xFFFFFFFFFF
+#define MASK_41 0x1FFFFFFFFFF
+#define MASK_42 0x3FFFFFFFFFF
+#define MASK_43 0x7FFFFFFFFFF
+#define MASK_44 0xFFFFFFFFFFF
+#define MASK_45 0x1FFFFFFFFFFF
+#define MASK_46 0x3FFFFFFFFFFF
+#define MASK_47 0x7FFFFFFFFFFF
+#define MASK_48 0xFFFFFFFFFFFF
+#define MASK_49 0x1FFFFFFFFFFFF
+#define MASK_50 0x3FFFFFFFFFFFF
+#define MASK_51 0x7FFFFFFFFFFFF
+#define MASK_52 0xFFFFFFFFFFFFF
+#define MASK_53 0x1FFFFFFFFFFFFF
+#define MASK_54 0x3FFFFFFFFFFFFF
+#define MASK_55 0x7FFFFFFFFFFFFF
+#define MASK_56 0xFFFFFFFFFFFFFF
+#define MASK_57 0x1FFFFFFFFFFFFFF
+#define MASK_58 0x3FFFFFFFFFFFFFF
+#define MASK_59 0x7FFFFFFFFFFFFFF
+#define MASK_60 0xFFFFFFFFFFFFFFF
+#define MASK_61 0x1FFFFFFFFFFFFFFF
+#define MASK_62 0x3FFFFFFFFFFFFFFF
+#define MASK_63 0x7FFFFFFFFFFFFFFF
 
 /* ***********************************/
 /* Unsigned Typedef definitions      */

@@ -32,7 +32,7 @@
 /**
  * \brief A magic number determined to be good enough for a large sample size of HashMap allocations
  */
-#define TEST_HUGE_CONSTANT U16_MAX
+#define TEST_HUGE_CONSTANT 1000000
 
 void Test_MC_Hash_InitAndClear(void)
 {
