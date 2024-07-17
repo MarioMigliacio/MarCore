@@ -111,6 +111,7 @@ void Test_MC_Type_SetBitCorrect(void)
     for (u8 i = 0; i < 64; i++)     // set every bit to 1
     {
         ASSERT_EQUAL_UINT64(testUint, lookupTable[i]);
+        testUint = 0;
         testUint = SET_BIT(testUint, i);
     }
 }
@@ -118,19 +119,17 @@ void Test_MC_Type_SetBitCorrect(void)
 void Test_MC_Type_ClearBitCorrect(void)
 {
     /* Arrange */
-    u64 testUint = U64_MAX;
+    u64 testUint;
 
     /* Act */
 
     /* Assert */
-    for (u8 i = 63; i > 0; i--)     // clear every bit to 0
+    for (u8 i = 0; i < 64; i++)     // clear every bit to 0
     {
-        testUint = CLEAR_BIT(testUint, i);
-        ASSERT_EQUAL_UINT64(testUint, lookupTable[i]);
+        testUint = lookupTable[i];
+        CLEAR_BIT(testUint, i - 1);         // reminder that bit position starts from 0, so sub 1 for correct shift index.
+        ASSERT_EQUAL_UINT64(testUint, 0);
     }
-
-    CLEAR_BIT(testUint, 0);
-    ASSERT_EQUAL_UINT64(testUint, lookupTable[0]);
 }
 
 void Test_MC_Type_ToggleBitCorrect(void)

@@ -117,70 +117,70 @@
  * many variables or options into one single u64.
  */
 
-#define MASK_0  0x0
-#define MASK_1  0x1
-#define MASK_2  0x3
-#define MASK_3  0x7
-#define MASK_4  0xF
-#define MASK_5  0x1F
-#define MASK_6  0x3F
-#define MASK_7  0x7F
-#define MASK_8  0xFF
-#define MASK_9  0x1FF
-#define MASK_10 0x3FF
-#define MASK_11 0x7FF
-#define MASK_12 0xFFF
-#define MASK_13 0x1FFF
-#define MASK_14 0x3FFF
-#define MASK_15 0x7FFF
-#define MASK_16 0xFFFF
-#define MASK_17 0x1FFFF
-#define MASK_18 0x3FFFF
-#define MASK_19 0x7FFFF
-#define MASK_20 0xFFFFF
-#define MASK_21 0x1FFFFF
-#define MASK_22 0x3FFFFF
-#define MASK_23 0x7FFFFF
-#define MASK_24 0xFFFFFF
-#define MASK_25 0x1FFFFFF
-#define MASK_26 0x3FFFFFF
-#define MASK_27 0x7FFFFFF
-#define MASK_28 0xFFFFFFF
-#define MASK_29 0x1FFFFFFF
-#define MASK_30 0x3FFFFFFF
-#define MASK_31 0x7FFFFFFF
-#define MASK_32 0xFFFFFFFF
-#define MASK_33 0x1FFFFFFFF
-#define MASK_34 0x3FFFFFFFF
-#define MASK_35 0x7FFFFFFFF
-#define MASK_36 0xFFFFFFFFF
-#define MASK_37 0x1FFFFFFFFF
-#define MASK_38 0x3FFFFFFFFF
-#define MASK_39 0x7FFFFFFFFF
-#define MASK_40 0xFFFFFFFFFF
-#define MASK_41 0x1FFFFFFFFFF
-#define MASK_42 0x3FFFFFFFFFF
-#define MASK_43 0x7FFFFFFFFFF
-#define MASK_44 0xFFFFFFFFFFF
-#define MASK_45 0x1FFFFFFFFFFF
-#define MASK_46 0x3FFFFFFFFFFF
-#define MASK_47 0x7FFFFFFFFFFF
-#define MASK_48 0xFFFFFFFFFFFF
-#define MASK_49 0x1FFFFFFFFFFFF
-#define MASK_50 0x3FFFFFFFFFFFF
-#define MASK_51 0x7FFFFFFFFFFFF
-#define MASK_52 0xFFFFFFFFFFFFF
-#define MASK_53 0x1FFFFFFFFFFFFF
-#define MASK_54 0x3FFFFFFFFFFFFF
-#define MASK_55 0x7FFFFFFFFFFFFF
-#define MASK_56 0xFFFFFFFFFFFFFF
-#define MASK_57 0x1FFFFFFFFFFFFFF
-#define MASK_58 0x3FFFFFFFFFFFFFF
-#define MASK_59 0x7FFFFFFFFFFFFFF
-#define MASK_60 0xFFFFFFFFFFFFFFF
-#define MASK_61 0x1FFFFFFFFFFFFFFF
-#define MASK_62 0x3FFFFFFFFFFFFFFF
-#define MASK_63 0x7FFFFFFFFFFFFFFF
+#define MASK_0  (0LL << 0)
+#define MASK_1  (1LL << 0)
+#define MASK_2  (1LL << 1)
+#define MASK_3  (1LL << 2)
+#define MASK_4  (1LL << 3)
+#define MASK_5  (1LL << 4)
+#define MASK_6  (1LL << 5)
+#define MASK_7  (1LL << 6)
+#define MASK_8  (1LL << 7)
+#define MASK_9  (1LL << 8)
+#define MASK_10 (1LL << 9)
+#define MASK_11 (1LL << 10)
+#define MASK_12 (1LL << 11)
+#define MASK_13 (1LL << 12)
+#define MASK_14 (1LL << 13)
+#define MASK_15 (1LL << 14)
+#define MASK_16 (1LL << 15)
+#define MASK_17 (1LL << 16)
+#define MASK_18 (1LL << 17)
+#define MASK_19 (1LL << 18)
+#define MASK_20 (1LL << 19)
+#define MASK_21 (1LL << 20)
+#define MASK_22 (1LL << 21)
+#define MASK_23 (1LL << 22)
+#define MASK_24 (1LL << 23)
+#define MASK_25 (1LL << 24)
+#define MASK_26 (1LL << 25)
+#define MASK_27 (1LL << 26)
+#define MASK_28 (1LL << 27)
+#define MASK_29 (1LL << 28)
+#define MASK_30 (1LL << 29)
+#define MASK_31 (1LL << 30)
+#define MASK_32 (1LL << 31)
+#define MASK_33 (1LL << 32)
+#define MASK_34 (1LL << 33)
+#define MASK_35 (1LL << 34)
+#define MASK_36 (1LL << 35)
+#define MASK_37 (1LL << 36)
+#define MASK_38 (1LL << 37)
+#define MASK_39 (1LL << 38)
+#define MASK_40 (1LL << 39)
+#define MASK_41 (1LL << 40)
+#define MASK_42 (1LL << 41)
+#define MASK_43 (1LL << 42)
+#define MASK_44 (1LL << 43)
+#define MASK_45 (1LL << 44)
+#define MASK_46 (1LL << 45)
+#define MASK_47 (1LL << 46)
+#define MASK_48 (1LL << 47)
+#define MASK_49 (1LL << 48)
+#define MASK_50 (1LL << 49)
+#define MASK_51 (1LL << 50)
+#define MASK_52 (1LL << 51)
+#define MASK_53 (1LL << 52)
+#define MASK_54 (1LL << 53)
+#define MASK_55 (1LL << 54)
+#define MASK_56 (1LL << 55)
+#define MASK_57 (1LL << 56)
+#define MASK_58 (1LL << 57)
+#define MASK_59 (1LL << 58)
+#define MASK_60 (1LL << 59)
+#define MASK_61 (1LL << 60)
+#define MASK_62 (1LL << 61)
+#define MASK_63 (1LL << 62)
 
 /* ***********************************/
 /* Unsigned Typedef definitions      */
