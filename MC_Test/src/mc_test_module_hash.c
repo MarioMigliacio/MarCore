@@ -2,7 +2,7 @@
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
 /* @file: mc_test_module_hash.c                                                                  */
-/* \brief: Source code for testing mc_type                                                       */
+/* \brief: Source code for testing mc_hash                                                       */
 /*                                                                                               */
 /* \Expects: 1. All necessary mc definitions are defined and linked properly                     */
 /*                                                                                               */
@@ -19,22 +19,7 @@
 #include "mc_test_hash.h"
 #include "mc_test_assert.h"
 
-/**
- * \brief A magic number determined to be good enough for a small sample size of HashMap
- */
-#define TEST_SMALL_CONSTANT 10
-
-/**
- * \brief A magic number determined to be good enough for a small sample size of HashMap allocations
- */
-#define TEST_MID_CONSTANT 32
-
-/**
- * \brief A magic number determined to be good enough for a large sample size of HashMap allocations
- */
-#define TEST_HUGE_CONSTANT 1000000
-
-void Test_MC_Hash_InitAndClear(void)
+void Test_MC_Hash_InitAndFree(void)
 {
     /* Arrange */
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_MID_CONSTANT);
@@ -52,7 +37,7 @@ void Test_MC_Hash_BigSize(void)
 {
     /* Arrange*/
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_HUGE_CONSTANT);
-    u64 successfullInserts = 0;
+    u64 successfulInserts = 0;
 
     char key[TEST_MID_CONSTANT];
     char value[TEST_MID_CONSTANT];
@@ -67,11 +52,11 @@ void Test_MC_Hash_BigSize(void)
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
         strncpy_s(value, sizeof(value), temp, sizeof(value) - 1);
 
-        successfullInserts += MC_Hashmap_Insert(hashmap, key, value, FALSE);
+        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, FALSE);
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfullInserts, TEST_HUGE_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_HUGE_CONSTANT);
 
     MC_Hashmap_Free(&hashmap);
 
@@ -82,7 +67,7 @@ void Test_MC_Hash_DynamicInsertion(void)
 {
     /* Arrange */
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_MID_CONSTANT);
-    u64 successfullInserts = 0;
+    u64 successfulInserts = 0;
 
     char key[TEST_MID_CONSTANT];
     char temp[TEST_MID_CONSTANT];
@@ -96,11 +81,11 @@ void Test_MC_Hash_DynamicInsertion(void)
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
         char *value = _strdup(temp);
 
-        successfullInserts += MC_Hashmap_Insert(hashmap, key, value, TRUE);
+        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, TRUE);
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfullInserts, TEST_MID_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_MID_CONSTANT);
 
     MC_Hashmap_Free(&hashmap);
 
@@ -111,8 +96,8 @@ void Test_MC_Hash_SearchAndRemove(void)
 {
     /* Arrange */
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_MID_CONSTANT);
-    u8 successfullInserts = 0;
-    u8 successfullRemoves = 0;
+    u8 successfulInserts = 0;
+    u8 successfulRemoves = 0;
 
     char key[TEST_MID_CONSTANT];
     char value[TEST_MID_CONSTANT];
@@ -121,6 +106,7 @@ void Test_MC_Hash_SearchAndRemove(void)
     ASSERT_NOT_NULL(hashmap);
 
     /* Act */
+    /* Assert */
     for (u8 i = 0; i < TEST_MID_CONSTANT; i++)
     {
         sprintf_s(temp, sizeof(temp), "Index: %d", i);
@@ -128,24 +114,23 @@ void Test_MC_Hash_SearchAndRemove(void)
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
         strncpy_s(value, sizeof(key), temp, sizeof(key) - 1);
 
-        successfullInserts += MC_Hashmap_Insert(hashmap, key, value, FALSE);
+        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, FALSE);
     }
 
-    ASSERT_EQUAL_UINT64(successfullInserts, TEST_MID_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_MID_CONSTANT);
 
     for (u8 i = 0; i < TEST_SMALL_CONSTANT; i++)
     {
         sprintf_s(temp, sizeof(temp),"Index: %d", i);
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
 
-        successfullRemoves += MC_Hashmap_RemoveAt(hashmap, key);
+        successfulRemoves += MC_Hashmap_RemoveAt(hashmap, key);
         void* o = MC_Hashmap_Search(hashmap, key);
 
         ASSERT_NULL(o);
     }
 
-    /* Assert */
-    ASSERT_TRUE((successfullInserts - successfullRemoves) == (TEST_MID_CONSTANT - TEST_SMALL_CONSTANT));
+    ASSERT_TRUE((successfulInserts - successfulRemoves) == (TEST_MID_CONSTANT - TEST_SMALL_CONSTANT));
 
     MC_Hashmap_Free(&hashmap);
 
@@ -157,7 +142,7 @@ void Test_MC_Module_Hash(void)
     /* Safekeeping with global file pointer */
     OPEN_TEST_OUTPUT_FILE("a");
 
-    Test_MC_Hash_InitAndClear();
+    Test_MC_Hash_InitAndFree();
     Test_MC_Hash_BigSize();
     Test_MC_Hash_DynamicInsertion();
     Test_MC_Hash_SearchAndRemove();

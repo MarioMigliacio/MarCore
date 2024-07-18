@@ -4,7 +4,7 @@
 /* @file: mc_test.h                                                                              */
 /* \brief: Header collection with function prototypes for testing                                */
 /*                                                                                               */
-/* \Expects: mc_test definitions are defined and linked properly                                */
+/* \Expects: mc_test definitions are defined and linked properly                                 */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
