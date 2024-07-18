@@ -35,4 +35,5 @@ void Run_All_Tests(void)
     /* Add each Run_Test_Module here */
     Test_MC_Module_Type();
     Test_MC_Module_Hash();
+    Test_MC_Module_Stack();
 }

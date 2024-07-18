@@ -8,34 +8,44 @@
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#ifndef MC_TEST_HASH_H
-#define MC_TEST_HASH_H
+#ifndef MC_TEST_STACK_H
+#define MC_TEST_STACK_H
 
 /**
- * \brief Test HashMap init and clear functionality
+ * \brief Test Stack init and clear functionality
  */
-void Test_MC_Hash_InitAndFree(void);
+void Test_MC_Stack_InitAndFree(void);
 
 /**
- * \brief Test HashMaps of huge sizes, and working ok
+ * \brief Test Stack of huge sizes, and working ok
  */
-void Test_MC_Hash_BigSize(void);
+void Test_MC_Stack_BigSize(void);
 
 /**
- * \brief Test Inserting of dynamic and non dynamic values
+ * \brief Test Pushing of dynamic and non dynamic values
  */
-void Test_MC_Hash_DynamicInsertion(void);
+void Test_MC_Stack_DynamicInsertion(void);
 
 /**
- * \brief Test HashMap searching, and entry removals
+ * \brief Test Stack Peek and Pop functionality
  */
-void Test_MC_Hash_SearchAndRemove(void);
+void Test_MC_Stack_PeekAndPop(void);
 
 /**
- * \brief Main exposed module for all unit tests of type MC_Hash
+ * \brief Test Stack is empty after init, pushes and pops til empty for consistency
+ */
+void Test_MC_Stack_IsEmpty(void);
+
+/**
+ * \brief Test Stack getsize functionality after various pushes and pops
+ */
+void Test_MC_Stack_GetSize(void);
+
+/**
+ * \brief Main exposed module for all unit tests of type MC_Stack
  *
- * \details Package all the mar core hashmap unit tests
+ * \details Package all the mar core stack unit tests
  */
-void Test_MC_Module_Hash(void);
+void Test_MC_Module_Stack(void);
 
 #endif

@@ -20,6 +20,21 @@
 #include <math.h>               // fabs (absolute value floating point)
 
 /**
+ * \brief A magic number determined to be good enough for a small sample size of HashMap
+ */
+#define TEST_SMALL_CONSTANT 10
+
+/**
+ * \brief A magic number determined to be good enough for a small sample size of HashMap allocations
+ */
+#define TEST_MID_CONSTANT 32
+
+/**
+ * \brief A magic number determined to be good enough for a large sample size of HashMap allocations
+ */
+#define TEST_HUGE_CONSTANT 1000000
+
+/**
  * \brief Macro to extract filename from __FILE__
  *
  * \details Since the __FILE__ macro expands the fully qualified path and filename,

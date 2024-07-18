@@ -17,6 +17,7 @@
 /* Include each Moduel after this point */
 #include "mc_test_hash.h"
 #include "mc_test_type.h"
+#include "mc_test_stack.h"
 
 /**
  * \brief Run All Tests runs every module that has defined unit tests.
