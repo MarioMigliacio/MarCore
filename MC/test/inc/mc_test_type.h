@@ -2,9 +2,9 @@
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
 /* @file: mc_test.h                                                                              */
-/* \brief: Header collection with function prototypes for testing                                */
+/* \brief: Test prototypes for the types interface                                               */
 /*                                                                                               */
-/* \Expects: mc_test definitions are defined and linked properly                                 */
+/* \Expects: No expectations are made prior to type definitions in this file                     */
 /*                                                                                               */
 /* ********************************************************************************************* */
 

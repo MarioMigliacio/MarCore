@@ -2,9 +2,9 @@
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
 /* @file: mc_hash.h                                                                              */
-/* \brief: Provide a hash-like data structure                                                    */
+/* \brief: Test prototypes for the hash interface                                                */
 /*                                                                                               */
-/* \Expects: mc_type.h is linked properly and defines types needed                               */
+/* \Expects: No expectations are made prior to type definitions in this file                     */
 /*                                                                                               */
 /* ********************************************************************************************* */
 

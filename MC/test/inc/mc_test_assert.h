@@ -4,10 +4,7 @@
 /* @file: mc_test_assert.h                                                                       */
 /* \brief: Utility functionality Macros for test assertions                                      */
 /*                                                                                               */
-/* \Expects: 1. mc_test_file.h is linked properly                                                */
-/*           2. Prior to calling ASSERT macros, the dump output file should be instantiated      */
-/*           Through calling OPEN_TEST_OUTPUT_FILE(). Leaving a matching call to                 */
-/*           CLOSE_TEST_OUTPUT_FILE() when finished.                                             */
+/* \Expects: MC library linked properly                                                          */
 /*                                                                                               */
 /* ********************************************************************************************* */
 

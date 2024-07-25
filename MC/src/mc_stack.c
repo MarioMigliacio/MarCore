@@ -1,7 +1,7 @@
 /* ********************************************************************************************* */
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
-/* @file: mc_stack.h                                                                             */
+/* @file: mc_stack.c                                                                             */
 /* \brief: Provide a stack-like data structure                                                   */
 /*                                                                                               */
 /* \Expects: mc_type.h is linked properly and defines types needed                               */

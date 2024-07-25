@@ -4,7 +4,7 @@
 /* @file: mc_test.h                                                                              */
 /* \brief: master header file for /test                                                          */
 /*                                                                                               */
-/* \Expects: mc_test definitions are defined and linked properly                                 */
+/* \Expects: MC library linked properly                                                          */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
