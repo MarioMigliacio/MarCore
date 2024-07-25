@@ -27,17 +27,3 @@ foreach(TEST_SOURCE ${TEST_SOURCES})
     # Add the test to ctest
     add_test(NAME ${TEST_NAME} COMMAND $<TARGET_FILE:${TEST_NAME}>)
 endforeach()
-
-# # Create the test executable
-# add_executable(MC_Tests ${TEST_SOURCES})
-
-# # Link the executable with the project library
-# target_link_libraries(MC_Tests MC)
-
-# # Set the output directories for the test executable
-# set_target_properties(MC_Tests PROPERTIES
-#     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/$<CONFIG>"
-# )
-
-# add_test(NAME MC_Tests COMMAND $<TARGET_FILE:MC_Tests>)
- 

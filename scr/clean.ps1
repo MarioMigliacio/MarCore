@@ -28,7 +28,7 @@ $buildDir = "$projectRoot\build"
 $testDir = "$projectRoot\test_output"
 
 # Clean any build artifact
-if ((Test-Path -Path "../build")) 
+if ((Test-Path -Path $buildDir)) 
 {
     Remove-Item -Recurse -Force -Path $buildDir
     Write-Host "Build directory removed." -ForegroundColor Green

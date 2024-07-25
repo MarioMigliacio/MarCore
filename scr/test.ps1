@@ -65,5 +65,12 @@ function copyFile
     }
 }
 
-simpleTest
-copyFile
+if ((Test-Path -Path $testDir)) 
+{
+    simpleTest
+    copyFile
+}
+else
+{
+    Write-Host "Unable to locate build folder for testing." -ForegroundColor Red
+}

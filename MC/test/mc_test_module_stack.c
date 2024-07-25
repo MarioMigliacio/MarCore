@@ -16,30 +16,40 @@
 
 #include "mc_test.h"
 
-void Test_MC_Stack_InitAndFree(void)
+u32 Test_MC_Stack_InitAndFree(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     MC_Stack *stack = MC_Stack_Init();
 
-    ASSERT_NOT_NULL(stack);
+    ASSERT_NOT_NULL(stack, failCount);
 
     /* Act */
     MC_Stack_Free(&stack);
 
     /* Assert */
-    ASSERT_NULL(stack);
+    ASSERT_NULL(stack, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Stack_BigSize(void)
+u32 Test_MC_Stack_BigSize(void)
 {
     /* Arrange*/
+    TEST_INIT();
+    
+    u32 failCount = 0;
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
     char value[TEST_CONSTANT_32];
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(stack);
+    ASSERT_NOT_NULL(stack, failCount);
 
     /* Act */
     for (u64 i = 0; i < TEST_CONSTANT_1000000; i++)
@@ -51,22 +61,29 @@ void Test_MC_Stack_BigSize(void)
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_1000000);
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_1000000, failCount);
 
     MC_Stack_Free(&stack);
 
-    ASSERT_NULL(stack);
+    ASSERT_NULL(stack, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Stack_DynamicInsertion(void)
+u32 Test_MC_Stack_DynamicInsertion(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(stack);
+    ASSERT_NOT_NULL(stack, failCount);
 
     /* Act */
     for (u8 i = 0; i < TEST_CONSTANT_32; i++)
@@ -78,23 +95,30 @@ void Test_MC_Stack_DynamicInsertion(void)
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_32);
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_32, failCount);
 
     MC_Stack_Free(&stack);
 
-    ASSERT_NULL(stack);
+    ASSERT_NULL(stack, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Stack_PeekAndPop(void)
+u32 Test_MC_Stack_PeekAndPop(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
     char value[TEST_CONSTANT_32];
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(stack);
+    ASSERT_NOT_NULL(stack, failCount);
 
     /* Act */
     /* Assert */
@@ -105,28 +129,35 @@ void Test_MC_Stack_PeekAndPop(void)
 
         successfulPushes += MC_Stack_Push(stack, value, false);
 
-        ASSERT_STRING_EQUAL((char*)MC_Stack_Peek(stack), value, strlen(value));
+        ASSERT_STRING_EQUAL((char*)MC_Stack_Peek(stack), value, strlen(value), failCount);
         MC_Stack_Pop(stack);
     }
     
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_32);
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_32, failCount);
 
     MC_Stack_Free(&stack);
 
-    ASSERT_NULL(stack);
+    ASSERT_NULL(stack, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Stack_IsEmpty(void)
+u32 Test_MC_Stack_IsEmpty(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
     char value[TEST_CONSTANT_32];
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(stack);
-    ASSERT_TRUE(MC_Stack_IsEmpty(stack));
+    ASSERT_NOT_NULL(stack, failCount);
+    ASSERT_TRUE(MC_Stack_IsEmpty(stack), failCount);
 
     /* Act */
     for (u8 i = 0; i < TEST_CONSTANT_10; i++)
@@ -138,18 +169,25 @@ void Test_MC_Stack_IsEmpty(void)
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_10);
-    ASSERT_FALSE(MC_Stack_IsEmpty(stack));
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_10, failCount);
+    ASSERT_FALSE(MC_Stack_IsEmpty(stack), failCount);
 
     MC_Stack_Free(&stack);
 
-    ASSERT_NULL(stack);
-    ASSERT_TRUE(MC_Stack_IsEmpty(stack));
+    ASSERT_NULL(stack, failCount);
+    ASSERT_TRUE(MC_Stack_IsEmpty(stack), failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Stack_GetSize(void)
+u32 Test_MC_Stack_GetSize(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
     u64 successfulPops = 0;
@@ -157,8 +195,8 @@ void Test_MC_Stack_GetSize(void)
     char value[TEST_CONSTANT_32];
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(stack);
-    ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), 0);
+    ASSERT_NOT_NULL(stack, failCount);
+    ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), 0, failCount);
 
     /* Act */
     /* Assert */
@@ -168,7 +206,7 @@ void Test_MC_Stack_GetSize(void)
         strncpy_s(value, sizeof(value), temp, sizeof(value) - 1);
 
         successfulPushes += MC_Stack_Push(stack, value, false);
-        ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), successfulPushes);
+        ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), successfulPushes, failCount);
     }
 
     for (u8 i = 0; i < TEST_CONSTANT_32; i++)
@@ -178,23 +216,29 @@ void Test_MC_Stack_GetSize(void)
             successfulPops++;
         }
 
-        ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), successfulPushes - successfulPops);
+        ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), successfulPushes - successfulPops, failCount);
     }
 
     MC_Stack_Free(&stack);
 
-    ASSERT_NULL(stack);
-    ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), 0);
+    ASSERT_NULL(stack, failCount);
+    ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), 0, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
 int main(void)
 {
-    Test_MC_Stack_InitAndFree();
-    Test_MC_Stack_BigSize();
-    Test_MC_Stack_DynamicInsertion();
-    Test_MC_Stack_PeekAndPop();
-    Test_MC_Stack_IsEmpty();
-    Test_MC_Stack_GetSize();
+    int failCount = 0;
 
-    return 0;
+    failCount += Test_MC_Stack_InitAndFree();
+    failCount += Test_MC_Stack_BigSize();
+    failCount += Test_MC_Stack_DynamicInsertion();
+    failCount += Test_MC_Stack_PeekAndPop();
+    failCount += Test_MC_Stack_IsEmpty();
+    failCount += Test_MC_Stack_GetSize();
+
+    return failCount;
 }

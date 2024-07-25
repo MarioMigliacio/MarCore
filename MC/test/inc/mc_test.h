@@ -2,10 +2,9 @@
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
 /* @file: mc_test.h                                                                              */
-/* \brief: Header collection with function prototypes for testing                                */
+/* \brief: master header file for /test                                                          */
 /*                                                                                               */
 /* \Expects: mc_test definitions are defined and linked properly                                 */
-/*           Also useful as a master header file for /test                                       */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
@@ -21,10 +20,5 @@
 #include "mc_test_hash.h"
 #include "mc_test_type.h"
 #include "mc_test_stack.h"
-
-/**
- * \brief Run All Tests runs every module that has defined unit tests.
- */
-//void Run_All_Tests(void);
 
 #endif

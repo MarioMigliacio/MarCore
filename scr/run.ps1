@@ -1,5 +1,5 @@
 ###################################################################################################
-#                                                                                                 #
+#  TEMPORARILY DEPRECATED BUT NOT REMOVED                                                         #
 # Author: Mario Migliacio                                                                         #
 # @file: run.ps1                                                                                  #
 # \brief: Most simplistic form of run test executable                                             #

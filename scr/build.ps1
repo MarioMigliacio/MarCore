@@ -7,7 +7,7 @@
 # \Expects: No expectations are made prior to executing build.ps1                                 #
 #                                                                                                 #
 # \Params: -c [CLEAN] clean the application before build                                          #
-#          -r [RUN] run the application after build                                               #
+#          -t [TEST] run the CTest suite after build                                              #
 #                                                                                                 #
 # \Success: The application has been built                                                        #
 #           Display build status in MAGENTA prompt                                                #
@@ -18,7 +18,7 @@
 
 param (
     [switch]$c,
-    [switch]$r
+    [switch]$t
 )
 
 # Note: The scriptDir, projectRoot, and buildDir allows this script to be invoked from anywhere. 
@@ -63,12 +63,11 @@ function cleanBuild
     Write-Host "Clean Finished.. Rebuilding project." -ForegroundColor Magenta
 }
 
-function runBuild
+function runTest
 {
-    $runPath = "$scriptDir\run.ps1"
-    $flag = $true
-    & $runPath -d:$flag 
-    Write-Host "Standard Run Finished." -ForegroundColor Magenta
+    $testPath = "$scriptDir\test.ps1"
+    & $testPath
+    Write-Host "CTest Test Finished." -ForegroundColor Magenta
 }
 
 # Locically number 1 to run.
@@ -92,7 +91,7 @@ catch
 }
 
 # If we want to do a simple test run, execute it now.
-if ($r)
+if ($t)
 {
-    runBuild
+    runTest
 }

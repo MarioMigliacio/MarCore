@@ -16,23 +16,33 @@
 
 #include "mc_test.h"
 
-void Test_MC_Hash_InitAndFree(void)
+u32 Test_MC_Hash_InitAndFree(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_32);
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
     MC_Hashmap_Free(&hashmap);
 
     /* Assert */
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Hash_BigSize(void)
+u32 Test_MC_Hash_BigSize(void)
 {
     /* Arrange*/
+    TEST_INIT();
+
+    u32 failCount = 0;
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_1000000);
     u64 successfulInserts = 0;
     u64 checkme = 0;
@@ -41,7 +51,7 @@ void Test_MC_Hash_BigSize(void)
     char value[TEST_CONSTANT_32];
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
     for (u64 i = 0; i < TEST_CONSTANT_1000000; i++)
@@ -54,23 +64,30 @@ void Test_MC_Hash_BigSize(void)
     }
 
     /* Assert */
-    checkme += ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_1000000);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_1000000, failCount);
 
     MC_Hashmap_Free(&hashmap);
 
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Hash_DynamicInsertion(void)
+u32 Test_MC_Hash_DynamicInsertion(void)
 {
     /* Arrange */
+    TEST_INIT();
+
+    u32 failCount = 0;
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_32);
     u64 successfulInserts = 0;
 
     char key[TEST_CONSTANT_32];
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
     for (u8 i = 0; i < TEST_CONSTANT_32; i++)
@@ -83,16 +100,23 @@ void Test_MC_Hash_DynamicInsertion(void)
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_32);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_32, failCount);
 
     MC_Hashmap_Free(&hashmap);
 
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Hash_SearchAndRemove(void)
+u32 Test_MC_Hash_SearchAndRemove(void)
 {
     /* Arrange */
+    TEST_INIT();
+
+    u32 failCount = 0;
     MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_32);
     u8 successfulInserts = 0;
     u8 successfulRemoves = 0;
@@ -101,7 +125,7 @@ void Test_MC_Hash_SearchAndRemove(void)
     char value[TEST_CONSTANT_32];
     char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
     /* Assert */
@@ -115,7 +139,7 @@ void Test_MC_Hash_SearchAndRemove(void)
         successfulInserts += MC_Hashmap_Insert(hashmap, key, value, false);
     }
 
-    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_32);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_32, failCount);
 
     for (u8 i = 0; i < TEST_CONSTANT_10; i++)
     {
@@ -125,22 +149,28 @@ void Test_MC_Hash_SearchAndRemove(void)
         successfulRemoves += MC_Hashmap_RemoveAt(hashmap, key);
         void* o = MC_Hashmap_Search(hashmap, key);
 
-        ASSERT_NULL(o);
+        ASSERT_NULL(o, failCount);
     }
 
-    ASSERT_TRUE((successfulInserts - successfulRemoves) == (TEST_CONSTANT_32 - TEST_CONSTANT_10));
+    ASSERT_TRUE((successfulInserts - successfulRemoves) == (TEST_CONSTANT_32 - TEST_CONSTANT_10), failCount);
 
     MC_Hashmap_Free(&hashmap);
 
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
 int main(void)
 {
-    Test_MC_Hash_InitAndFree();
-    Test_MC_Hash_BigSize();
-    Test_MC_Hash_DynamicInsertion();
-    Test_MC_Hash_SearchAndRemove();
+    int failCount = 0;
 
-    return 0;
+    failCount += Test_MC_Hash_InitAndFree();
+    failCount += Test_MC_Hash_BigSize();
+    failCount += Test_MC_Hash_DynamicInsertion();
+    failCount += Test_MC_Hash_SearchAndRemove();
+
+    return failCount;
 }
