@@ -14,10 +14,7 @@
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mc_stack.h"
-#include "mc_type.h"
-#include "mc_test_stack.h"
-#include "mc_test_assert.h"
+#include "mc_test.h"
 
 void Test_MC_Stack_InitAndFree(void)
 {
@@ -39,22 +36,22 @@ void Test_MC_Stack_BigSize(void)
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
-    char value[TEST_MID_CONSTANT];
-    char temp[TEST_MID_CONSTANT];
+    char value[TEST_CONSTANT_32];
+    char temp[TEST_CONSTANT_32];
 
     ASSERT_NOT_NULL(stack);
 
     /* Act */
-    for (u64 i = 0; i < TEST_HUGE_CONSTANT; i++)
+    for (u64 i = 0; i < TEST_CONSTANT_1000000; i++)
     {
         sprintf_s(temp, sizeof(temp), "Stack push: %lld", i);
         strncpy_s(value, sizeof(value), temp, sizeof(value) - 1);
 
-        successfulPushes += MC_Stack_Push(stack, value, FALSE);
+        successfulPushes += MC_Stack_Push(stack, value, false);
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_HUGE_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_1000000);
 
     MC_Stack_Free(&stack);
 
@@ -67,21 +64,21 @@ void Test_MC_Stack_DynamicInsertion(void)
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
-    char temp[TEST_MID_CONSTANT];
+    char temp[TEST_CONSTANT_32];
 
     ASSERT_NOT_NULL(stack);
 
     /* Act */
-    for (u8 i = 0; i < TEST_MID_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_32; i++)
     {
         sprintf_s(temp, sizeof(temp), "Stack push: %d", i);
         char *value = _strdup(temp);
 
-        successfulPushes += MC_Stack_Push(stack, value, TRUE);
+        successfulPushes += MC_Stack_Push(stack, value, true);
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_MID_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_32);
 
     MC_Stack_Free(&stack);
 
@@ -94,25 +91,25 @@ void Test_MC_Stack_PeekAndPop(void)
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
-    char value[TEST_MID_CONSTANT];
-    char temp[TEST_MID_CONSTANT];
+    char value[TEST_CONSTANT_32];
+    char temp[TEST_CONSTANT_32];
 
     ASSERT_NOT_NULL(stack);
 
     /* Act */
     /* Assert */
-    for (u8 i = 0; i < TEST_MID_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_32; i++)
     {
         sprintf_s(temp, sizeof(temp), "Stack push: %d", i);
         strncpy_s(value, sizeof(value), temp, sizeof(value) - 1);
 
-        successfulPushes += MC_Stack_Push(stack, value, FALSE);
+        successfulPushes += MC_Stack_Push(stack, value, false);
 
         ASSERT_STRING_EQUAL((char*)MC_Stack_Peek(stack), value, strlen(value));
         MC_Stack_Pop(stack);
     }
     
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_MID_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_32);
 
     MC_Stack_Free(&stack);
 
@@ -125,23 +122,23 @@ void Test_MC_Stack_IsEmpty(void)
     MC_Stack *stack = MC_Stack_Init();
     u64 successfulPushes = 0;
 
-    char value[TEST_MID_CONSTANT];
-    char temp[TEST_MID_CONSTANT];
+    char value[TEST_CONSTANT_32];
+    char temp[TEST_CONSTANT_32];
 
     ASSERT_NOT_NULL(stack);
     ASSERT_TRUE(MC_Stack_IsEmpty(stack));
 
     /* Act */
-    for (u8 i = 0; i < TEST_SMALL_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_10; i++)
     {
         sprintf_s(temp, sizeof(temp), "Stack push: %d", i);
         strncpy_s(value, sizeof(value), temp, sizeof(value) - 1);
 
-        successfulPushes += MC_Stack_Push(stack, value, FALSE);
+        successfulPushes += MC_Stack_Push(stack, value, false);
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulPushes, TEST_SMALL_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulPushes, TEST_CONSTANT_10);
     ASSERT_FALSE(MC_Stack_IsEmpty(stack));
 
     MC_Stack_Free(&stack);
@@ -157,24 +154,24 @@ void Test_MC_Stack_GetSize(void)
     u64 successfulPushes = 0;
     u64 successfulPops = 0;
 
-    char value[TEST_MID_CONSTANT];
-    char temp[TEST_MID_CONSTANT];
+    char value[TEST_CONSTANT_32];
+    char temp[TEST_CONSTANT_32];
 
     ASSERT_NOT_NULL(stack);
     ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), 0);
 
     /* Act */
     /* Assert */
-    for (u8 i = 0; i < TEST_MID_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_32; i++)
     {
         sprintf_s(temp, sizeof(temp), "Stack push: %d", i);
         strncpy_s(value, sizeof(value), temp, sizeof(value) - 1);
 
-        successfulPushes += MC_Stack_Push(stack, value, FALSE);
+        successfulPushes += MC_Stack_Push(stack, value, false);
         ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), successfulPushes);
     }
 
-    for (u8 i = 0; i < TEST_MID_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_32; i++)
     {
         if (MC_Stack_Pop(stack) != NULL)
         {
@@ -190,11 +187,8 @@ void Test_MC_Stack_GetSize(void)
     ASSERT_EQUAL_UINT64(MC_Stack_Size(stack), 0);
 }
 
-void Test_MC_Module_Stack(void)
+int main(void)
 {
-    /* Safekeeping with global file pointer */
-    OPEN_TEST_OUTPUT_FILE("a");
-
     Test_MC_Stack_InitAndFree();
     Test_MC_Stack_BigSize();
     Test_MC_Stack_DynamicInsertion();
@@ -202,6 +196,5 @@ void Test_MC_Module_Stack(void)
     Test_MC_Stack_IsEmpty();
     Test_MC_Stack_GetSize();
 
-    /* Safekeeping with global file pointer */
-    CLOSE_TEST_OUTPUT_FILE();
+    return 0;
 }

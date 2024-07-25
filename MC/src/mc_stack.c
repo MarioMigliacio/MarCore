@@ -41,14 +41,14 @@ u8 MC_Stack_Push(MC_Stack* stack, void* value, u8 isDynamic)
 {
     if (!stack)
     {
-        return FALSE;
+        return false;
     }
 
     StackNode* newNode = (StackNode*)malloc(sizeof(StackNode));
 
     if (!newNode)
     {
-        return FALSE;
+        return false;
     }
 
     newNode->data = value;
@@ -57,7 +57,7 @@ u8 MC_Stack_Push(MC_Stack* stack, void* value, u8 isDynamic)
     stack->top = newNode;
     stack->size++;
 
-    return TRUE;
+    return true;
 }
 
 void* MC_Stack_Pop(MC_Stack* stack)

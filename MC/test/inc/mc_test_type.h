@@ -72,6 +72,6 @@ void Test_MC_Type_IsBitSetCorrect(void);
  *
  * \details Package all the mar core type unit tests
  */
-void Test_MC_Module_Type(void);
+//void Test_MC_Module_Type(void);
 
 #endif

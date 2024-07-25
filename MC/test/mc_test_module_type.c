@@ -14,9 +14,11 @@
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mc_type.h"
-#include "mc_test_assert.h"
+#include "mc_test.h"
 
+/**
+ * \brief An internal table that is useful in testing a large array of bitmasks
+ */
 static u64 lookupTable[64] = {
     MASK_0, MASK_1, MASK_2, MASK_3, MASK_4, MASK_5, MASK_6, MASK_7,
     MASK_8, MASK_9, MASK_10, MASK_11, MASK_12, MASK_13, MASK_14, MASK_15,
@@ -175,11 +177,8 @@ void Test_MC_Type_IsBitSetCorrect(void)
     }
 }
 
-void Test_MC_Module_Type(void)
+int main(void)
 {
-    /* Safekeeping with global file pointer */
-    OPEN_TEST_OUTPUT_FILE("a");
-
     Test_MC_Type_UintMaxValsCorrect();
     Test_MC_Type_UintMaxOverflowCorrect();
     Test_MC_Type_IntMinValsCorrect();
@@ -189,6 +188,5 @@ void Test_MC_Module_Type(void)
     Test_MC_Type_ToggleBitCorrect();
     Test_MC_Type_IsBitSetCorrect();
 
-    /* Safekeeping with global file pointer */
-    CLOSE_TEST_OUTPUT_FILE();
+    return 0;
 }

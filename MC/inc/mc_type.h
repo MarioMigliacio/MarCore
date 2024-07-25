@@ -12,20 +12,11 @@
 #define MC_TYPE_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /* ***********************************/
 /* Preprocessor definitions          */
 /* ***********************************/
-
-/**
- * \brief represents the typical false logic, 0. Useful so we don't have to include <stdbool.h>
- */
-#define FALSE 0
-
-/**
- * \brief represents the typical true logic, 1. Useful so we don't have to include <stdbool.h>
- */
-#define TRUE 1
 
 /**
  * \brief represents the maximum 8 bit unsigned value: 255
