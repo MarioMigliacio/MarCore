@@ -31,8 +31,8 @@ MC_HashMap* MC_Hashmap_Init(u64 size);
  * \param map: Pointer to the HashMap to insert into
  * \param key: Null terminated string as Key for key/val pair
  * \param value: Pointer to data as value for key/val pair
- * \param dynamic: TRUE/FALSE, if the value to be inserted was dynamically allocated
- * \returns u8: TRUE/FALSE corresponding to success fail.
+ * \param dynamic: true/false, if the value to be inserted was dynamically allocated
+ * \returns u8: true/false corresponding to success fail.
  */
 u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value, const u8 dynamic);
 
@@ -48,7 +48,7 @@ void* MC_Hashmap_Search(const MC_HashMap *map, const char *key);
  * \brief Remove an element in the HashMap if the key exists.
  * \param map: Pointer to the HashMap to remove from
  * \param key: Null terminated string as Key for key/val pair to be removed
- * \returns u8: TRUE/FALSE corresponding to success fail.
+ * \returns u8: true/false corresponding to success fail.
  */
 u8 MC_Hashmap_RemoveAt(MC_HashMap *map, const char *key);
 

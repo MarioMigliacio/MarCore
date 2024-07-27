@@ -15,6 +15,9 @@ file(GLOB_RECURSE HEADERS "inc/*.h")
 # Create the library
 add_library(MC ${SOURCES} ${HEADERS})
 
+# Link the necessary Windows library for GUID generation
+target_link_libraries(MC ole32)
+
 # Specify include directoryies for users of this library
 target_include_directories(MC PUBLIC inc)
 

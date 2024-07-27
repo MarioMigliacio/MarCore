@@ -29,8 +29,8 @@ MC_Stack* MC_Stack_Init();
  * \brief Add an element into the Stack collection. If the Key already exists, update the value.
  * \param stack: Pointer to the Stack to push onto
  * \param value: Pointer to data as value
- * \param dynamic: TRUE/FALSE, if the value to be inserted was dynamically allocated
- * \returns u8: TRUE/FALSE corresponding to success fail
+ * \param dynamic: true/false, if the value to be inserted was dynamically allocated
+ * \returns u8: true/false corresponding to success fail
  */
 u8 MC_Stack_Push(MC_Stack* stack, void* value, u8 dynamic);
 
@@ -51,7 +51,7 @@ void* MC_Stack_Peek(const MC_Stack* stack);
 /**
  * \brief Get the state of whether or not the Stack is Empty or not. 
  * \param stack: Pointer to the Stack to determine if empty
- * \returns u8: State of TRUE/FALSE to Is it empty.
+ * \returns u8: State of true/false to Is it empty.
  */
 u8 MC_Stack_IsEmpty(const MC_Stack* stack);
 

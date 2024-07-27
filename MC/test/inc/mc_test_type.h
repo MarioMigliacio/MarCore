@@ -11,6 +11,8 @@
 #ifndef MC_TEST_TYPE_H
 #define MC_TEST_TYPE_H
 
+#include "mc_type.h"
+
 /**
  * \brief Test type Unsigned Max Values Are Correct
  *

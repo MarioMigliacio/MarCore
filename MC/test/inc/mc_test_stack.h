@@ -11,6 +11,8 @@
 #ifndef MC_TEST_STACK_H
 #define MC_TEST_STACK_H
 
+#include "mc_type.h"
+
 /**
  * \brief Test Stack init and clear functionality
  */

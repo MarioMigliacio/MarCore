@@ -15,7 +15,7 @@
 #include <stdio.h>              // printf
 #include <string.h>             // strncmp
 #include <math.h>               // fabs (absolute value floating point)
-#include <inttypes.h>           // handle 64 bit sizes in format strings without warning
+#include <inttypes.h>           // PRIX32 / PRIX16 etc
 
 /**
  * \brief A magic number determined to be good enough for a small sample size of HashMap
@@ -26,6 +26,11 @@
  * \brief A magic number determined to be good enough for a small sample size of HashMap allocations
  */
 #define TEST_CONSTANT_32 32
+
+/**
+ * \brief A magic number for 10,000 iterations
+ */
+#define TEST_CONSTANT_10000 10000
 
 /**
  * \brief A magic number determined to be good enough for a large sample size of HashMap allocations

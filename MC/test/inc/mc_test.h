@@ -17,8 +17,10 @@
 #include "mc_hash.h"
 #include "mc_type.h"
 #include "mc_stack.h"
+#include "mc_guid.h"
 #include "mc_test_hash.h"
 #include "mc_test_type.h"
 #include "mc_test_stack.h"
+#include "mc_test_guid.h"
 
 #endif
