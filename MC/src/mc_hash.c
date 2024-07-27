@@ -95,7 +95,7 @@ u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value, const u8 dyn
 {
     if (!map || !key)
     {
-        return FALSE;
+        return false;
     }
 
     u64 index = internal_hash_function(key, map->size);
@@ -113,7 +113,7 @@ u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value, const u8 dyn
             new_node->value = value;
             new_node->isDynamic = dynamic;
 
-            return TRUE;
+            return true;
         }
 
         new_node = new_node->next;
@@ -123,7 +123,7 @@ u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value, const u8 dyn
     
     if (!new_node)
     {
-        return FALSE;
+        return false;
     }
 
     new_node->key = _strdup(key);   // _strdup syscall - "I promise to free this memory." - mario
@@ -132,14 +132,14 @@ u8 MC_Hashmap_Insert(MC_HashMap *map, const char *key, void *value, const u8 dyn
     new_node->next = map->buckets[index];
     map->buckets[index] = new_node;
 
-    return TRUE;
+    return true;
 }
 
 void* MC_Hashmap_Search(const MC_HashMap *map, const char *key)
 {
     if (!map || !key)
     {
-        return FALSE;
+        return false;
     }
 
     u64 index = internal_hash_function(key, map->size);
@@ -162,7 +162,7 @@ u8 MC_Hashmap_RemoveAt(MC_HashMap *map, const char *key)
 {
     if (!map || !key)
     {
-        return FALSE;
+        return false;
     }
 
     u64 index = internal_hash_function(key, map->size);
@@ -191,14 +191,14 @@ u8 MC_Hashmap_RemoveAt(MC_HashMap *map, const char *key)
             free(node->key);
             free(node);
 
-            return TRUE;
+            return true;
         }
 
         prev = node;
         node = node->next;
     }
 
-    return FALSE;
+    return false;
 }
 
 void MC_Hashmap_Free(MC_HashMap **map_ptr)

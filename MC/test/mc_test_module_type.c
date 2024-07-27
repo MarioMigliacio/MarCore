@@ -14,9 +14,11 @@
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mc_type.h"
-#include "mc_test_assert.h"
+#include "mc_test.h"
 
+/**
+ * \brief An internal table that is useful in testing a large array of bitmasks
+ */
 static u64 lookupTable[64] = {
     MASK_0, MASK_1, MASK_2, MASK_3, MASK_4, MASK_5, MASK_6, MASK_7,
     MASK_8, MASK_9, MASK_10, MASK_11, MASK_12, MASK_13, MASK_14, MASK_15,
@@ -28,9 +30,12 @@ static u64 lookupTable[64] = {
     MASK_56, MASK_57, MASK_58, MASK_59, MASK_60, MASK_61, MASK_62, MASK_63
 };
 
-void Test_MC_Type_UintMaxValsCorrect(void)
+u32 Test_MC_Type_UintMaxValsCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     u8 maxU8   =  U8_MAX;
     u16 maxU16 = U16_MAX;
     u32 maxU32 = U32_MAX;
@@ -39,15 +44,22 @@ void Test_MC_Type_UintMaxValsCorrect(void)
     /* Act */
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(maxU8,   UINT8_MAX);
-    ASSERT_EQUAL_UINT64(maxU16, UINT16_MAX);
-    ASSERT_EQUAL_UINT64(maxU32, UINT32_MAX);
-    ASSERT_EQUAL_UINT64(maxU64, UINT64_MAX);
+    ASSERT_EQUAL_UINT64(maxU8,   UINT8_MAX, failCount);
+    ASSERT_EQUAL_UINT64(maxU16, UINT16_MAX, failCount);
+    ASSERT_EQUAL_UINT64(maxU32, UINT32_MAX, failCount);
+    ASSERT_EQUAL_UINT64(maxU64, UINT64_MAX, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Type_UintMaxOverflowCorrect(void)
+u32 Test_MC_Type_UintMaxOverflowCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     u8 maxU8   =  U8_MAX;
     u16 maxU16 = U16_MAX;
     u32 maxU32 = U32_MAX;
@@ -60,15 +72,22 @@ void Test_MC_Type_UintMaxOverflowCorrect(void)
     maxU64 += 1;
 
     /* Assert */
-    ASSERT_NOT_EQUAL_UINT64(maxU8,   UINT8_MAX);
-    ASSERT_NOT_EQUAL_UINT64(maxU16, UINT16_MAX);
-    ASSERT_NOT_EQUAL_UINT64(maxU32, UINT32_MAX);
-    ASSERT_NOT_EQUAL_UINT64(maxU64, UINT64_MAX);
+    ASSERT_NOT_EQUAL_UINT64(maxU8,   UINT8_MAX, failCount);
+    ASSERT_NOT_EQUAL_UINT64(maxU16, UINT16_MAX, failCount);
+    ASSERT_NOT_EQUAL_UINT64(maxU32, UINT32_MAX, failCount);
+    ASSERT_NOT_EQUAL_UINT64(maxU64, UINT64_MAX, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Type_IntMinValsCorrect(void)
+u32 Test_MC_Type_IntMinValsCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     i8 minI8   =  I8_MIN;
     i16 minI16 = I16_MIN;
     i32 minI32 = I32_MIN;
@@ -77,15 +96,22 @@ void Test_MC_Type_IntMinValsCorrect(void)
     /* Act */
 
     /* Assert */
-    ASSERT_EQUAL_INT64(minI8,   INT8_MIN);
-    ASSERT_EQUAL_INT64(minI16, INT16_MIN);
-    ASSERT_EQUAL_INT64(minI32, INT32_MIN);
-    ASSERT_EQUAL_INT64(minI64, INT64_MIN);
+    ASSERT_EQUAL_INT64(minI8,   INT8_MIN, failCount);
+    ASSERT_EQUAL_INT64(minI16, INT16_MIN, failCount);
+    ASSERT_EQUAL_INT64(minI32, INT32_MIN, failCount);
+    ASSERT_EQUAL_INT64(minI64, INT64_MIN, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Type_IntMaxValsCorrect(void)
+u32 Test_MC_Type_IntMaxValsCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     i8 maxI8   =  I8_MAX;
     i16 maxI16 = I16_MAX;
     i32 maxI32 = I32_MAX;
@@ -94,15 +120,22 @@ void Test_MC_Type_IntMaxValsCorrect(void)
     /* Act */
 
     /* Assert */
-    ASSERT_EQUAL_INT64(maxI8,   INT8_MAX);
-    ASSERT_EQUAL_INT64(maxI16, INT16_MAX);
-    ASSERT_EQUAL_INT64(maxI32, INT32_MAX);
-    ASSERT_EQUAL_INT64(maxI64, INT64_MAX);
+    ASSERT_EQUAL_INT64(maxI8,   INT8_MAX, failCount);
+    ASSERT_EQUAL_INT64(maxI16, INT16_MAX, failCount);
+    ASSERT_EQUAL_INT64(maxI32, INT32_MAX, failCount);
+    ASSERT_EQUAL_INT64(maxI64, INT64_MAX, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Type_SetBitCorrect(void)
+u32 Test_MC_Type_SetBitCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     u64 testUint = 0;
 
     /* Act */
@@ -110,15 +143,22 @@ void Test_MC_Type_SetBitCorrect(void)
     /* Assert */
     for (u8 i = 0; i < 64; i++)     // set every bit to 1
     {
-        ASSERT_EQUAL_UINT64(testUint, lookupTable[i]);
+        ASSERT_EQUAL_UINT64(testUint, lookupTable[i], failCount);
         testUint = 0;
         testUint = SET_BIT(testUint, i);
     }
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Type_ClearBitCorrect(void)
+u32 Test_MC_Type_ClearBitCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     u64 testUint;
 
     /* Act */
@@ -128,13 +168,20 @@ void Test_MC_Type_ClearBitCorrect(void)
     {
         testUint = lookupTable[i];
         CLEAR_BIT(testUint, i - 1);         // reminder that bit position starts from 0, so sub 1 for correct shift index.
-        ASSERT_EQUAL_UINT64(testUint, 0);
+        ASSERT_EQUAL_UINT64(testUint, 0, failCount);
     }
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Type_ToggleBitCorrect(void)
+u32 Test_MC_Type_ToggleBitCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     u8 testUint = U8_MAX;
 
     /* Act */
@@ -144,19 +191,26 @@ void Test_MC_Type_ToggleBitCorrect(void)
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(testUint, 0);
+    ASSERT_EQUAL_UINT64(testUint, 0, failCount);
 
     for (u8 i = 0; i < 8; i++)  // toggle every bit back to 1
     {
         TOGGLE_BIT(testUint, i);
     }
 
-    ASSERT_EQUAL_UINT64(testUint, U8_MAX);
+    ASSERT_EQUAL_UINT64(testUint, U8_MAX, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Type_IsBitSetCorrect(void)
+u32 Test_MC_Type_IsBitSetCorrect(void)
 {
     /* Arrange */
+    TEST_INIT();
+    
+    u32 failCount = 0;
     u8 testUint = 0b10101010;
 
     /* Act */
@@ -166,29 +220,31 @@ void Test_MC_Type_IsBitSetCorrect(void)
     {
         if (i % 2 == 0) // even indexes are 0s
         {
-            ASSERT_TRUE(IS_BIT_SET(testUint, i) == 0);
+            ASSERT_TRUE(IS_BIT_SET(testUint, i) == 0, failCount);
         }
         else
         {
-            ASSERT_TRUE(IS_BIT_SET(testUint, i) != 0);
+            ASSERT_TRUE(IS_BIT_SET(testUint, i) != 0, failCount);
         }
     }
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Module_Type(void)
+int main(void)
 {
-    /* Safekeeping with global file pointer */
-    OPEN_TEST_OUTPUT_FILE("a");
+    int failCount = 0;
 
-    Test_MC_Type_UintMaxValsCorrect();
-    Test_MC_Type_UintMaxOverflowCorrect();
-    Test_MC_Type_IntMinValsCorrect();
-    Test_MC_Type_IntMaxValsCorrect();
-    Test_MC_Type_SetBitCorrect();
-    Test_MC_Type_ClearBitCorrect();
-    Test_MC_Type_ToggleBitCorrect();
-    Test_MC_Type_IsBitSetCorrect();
+    failCount += Test_MC_Type_UintMaxValsCorrect();
+    failCount += Test_MC_Type_UintMaxOverflowCorrect();
+    failCount += Test_MC_Type_IntMinValsCorrect();
+    failCount += Test_MC_Type_IntMaxValsCorrect();
+    failCount += Test_MC_Type_SetBitCorrect();
+    failCount += Test_MC_Type_ClearBitCorrect();
+    failCount += Test_MC_Type_ToggleBitCorrect();
+    failCount += Test_MC_Type_IsBitSetCorrect();
 
-    /* Safekeeping with global file pointer */
-    CLOSE_TEST_OUTPUT_FILE();
+    return failCount;
 }

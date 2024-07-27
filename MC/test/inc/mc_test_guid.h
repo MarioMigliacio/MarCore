@@ -1,27 +1,26 @@
 /* ********************************************************************************************* */
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
-/* @file: mc_test.h                                                                              */
-/* \brief: Header collection with function prototypes for testing                                */
+/* @file: mc_guid.h                                                                              */
+/* \brief: Test prototypes for the guid interface                                                */
 /*                                                                                               */
-/* \Expects: mc_test definitions are defined and linked properly                                 */
+/* \Expects: No expectations are made prior to type definitions in this file                     */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#ifndef MC_TEST_H
-#define MC_TEST_H
+#ifndef MC_TEST_GUID_H
+#define MC_TEST_GUID_H
 
 #include "mc_type.h"
-#include "mc_test_assert.h"
-
-/* Include each Moduel after this point */
-#include "mc_test_hash.h"
-#include "mc_test_type.h"
-#include "mc_test_stack.h"
 
 /**
- * \brief Run All Tests runs every module that has defined unit tests.
+ * \brief Test Guid generate functionality
  */
-void Run_All_Tests(void);
+u32 Test_MC_Guid_Generate(void);
+
+/**
+ * \brief Test Guid string formatting functionality
+ */
+u32 Test_MC_Guid_Format(void);
 
 #endif

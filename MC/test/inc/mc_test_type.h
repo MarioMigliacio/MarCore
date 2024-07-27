@@ -2,76 +2,71 @@
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
 /* @file: mc_test.h                                                                              */
-/* \brief: Header collection with function prototypes for testing                                */
+/* \brief: Test prototypes for the types interface                                               */
 /*                                                                                               */
-/* \Expects: mc_test definitions are defined and linked properly                                 */
+/* \Expects: No expectations are made prior to type definitions in this file                     */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
 #ifndef MC_TEST_TYPE_H
 #define MC_TEST_TYPE_H
 
+#include "mc_type.h"
+
 /**
  * \brief Test type Unsigned Max Values Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_UintMaxValsCorrect(void);
+u32 Test_MC_Type_UintMaxValsCorrect(void);
 
 /**
  * \brief Test type Unsigned Overflow Expected
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_UintMaxOverflowCorrect(void);
+u32 Test_MC_Type_UintMaxOverflowCorrect(void);
 
 /**
  * \brief Test type Signed Min Values Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_IntMinValsCorrect(void);
+u32 Test_MC_Type_IntMinValsCorrect(void);
 
 /**
  * \brief Test type Signed Max Values Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_IntMaxValsCorrect(void);
+u32 Test_MC_Type_IntMaxValsCorrect(void);
 
 /**
  * \brief Test type Setting bits Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_SetBitCorrect(void);
+u32 Test_MC_Type_SetBitCorrect(void);
 
 /**
  * \brief Test type Clearing bits Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_ClearBitCorrect(void);
+u32 Test_MC_Type_ClearBitCorrect(void);
 
 /**
  * \brief Test type Toggle bits Are Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_ToggleBitCorrect(void);
+u32 Test_MC_Type_ToggleBitCorrect(void);
 
 /**
  * \brief Test type Bit mask boolean Is Correct
  *
  * \details Stress the type definitions and values
  */
-void Test_MC_Type_IsBitSetCorrect(void);
-
-/**
- * \brief Main exposed module for all unit tests of type MC_type
- *
- * \details Package all the mar core type unit tests
- */
-void Test_MC_Module_Type(void);
+u32 Test_MC_Type_IsBitSetCorrect(void);
 
 #endif

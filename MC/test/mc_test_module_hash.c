@@ -14,112 +14,134 @@
 /*                                                                                               */
 /* ********************************************************************************************* */
 
-#include "mc_hash.h"
-#include "mc_type.h"
-#include "mc_test_hash.h"
-#include "mc_test_assert.h"
+#include "mc_test.h"
 
-void Test_MC_Hash_InitAndFree(void)
+u32 Test_MC_Hash_InitAndFree(void)
 {
     /* Arrange */
-    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_MID_CONSTANT);
+    TEST_INIT();
+    
+    u32 failCount = 0;
+    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_32);
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
     MC_Hashmap_Free(&hashmap);
 
     /* Assert */
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Hash_BigSize(void)
+u32 Test_MC_Hash_BigSize(void)
 {
     /* Arrange*/
-    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_HUGE_CONSTANT);
+    TEST_INIT();
+
+    u32 failCount = 0;
+    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_1000000);
     u64 successfulInserts = 0;
+    u64 checkme = 0;
 
-    char key[TEST_MID_CONSTANT];
-    char value[TEST_MID_CONSTANT];
-    char temp[TEST_MID_CONSTANT];
+    char key[TEST_CONSTANT_32];
+    char value[TEST_CONSTANT_32];
+    char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
-    for (u64 i = 0; i < TEST_HUGE_CONSTANT; i++)
+    for (u64 i = 0; i < TEST_CONSTANT_1000000; i++)
     {
         sprintf_s(temp, sizeof(temp), "Index: %lld", i);
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
         strncpy_s(value, sizeof(value), temp, sizeof(value) - 1);
 
-        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, FALSE);
+        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, false);
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulInserts, TEST_HUGE_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_1000000, failCount);
 
     MC_Hashmap_Free(&hashmap);
 
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Hash_DynamicInsertion(void)
+u32 Test_MC_Hash_DynamicInsertion(void)
 {
     /* Arrange */
-    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_MID_CONSTANT);
+    TEST_INIT();
+
+    u32 failCount = 0;
+    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_32);
     u64 successfulInserts = 0;
 
-    char key[TEST_MID_CONSTANT];
-    char temp[TEST_MID_CONSTANT];
+    char key[TEST_CONSTANT_32];
+    char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
-    for (u8 i = 0; i < TEST_MID_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_32; i++)
     {
         sprintf_s(temp, sizeof(temp), "Index: %d", i);
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
         char *value = _strdup(temp);
 
-        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, TRUE);
+        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, true);
     }
 
     /* Assert */
-    ASSERT_EQUAL_UINT64(successfulInserts, TEST_MID_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_32, failCount);
 
     MC_Hashmap_Free(&hashmap);
 
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Hash_SearchAndRemove(void)
+u32 Test_MC_Hash_SearchAndRemove(void)
 {
     /* Arrange */
-    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_MID_CONSTANT);
+    TEST_INIT();
+
+    u32 failCount = 0;
+    MC_HashMap *hashmap = MC_Hashmap_Init(TEST_CONSTANT_32);
     u8 successfulInserts = 0;
     u8 successfulRemoves = 0;
 
-    char key[TEST_MID_CONSTANT];
-    char value[TEST_MID_CONSTANT];
-    char temp[TEST_MID_CONSTANT];
+    char key[TEST_CONSTANT_32];
+    char value[TEST_CONSTANT_32];
+    char temp[TEST_CONSTANT_32];
 
-    ASSERT_NOT_NULL(hashmap);
+    ASSERT_NOT_NULL(hashmap, failCount);
 
     /* Act */
     /* Assert */
-    for (u8 i = 0; i < TEST_MID_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_32; i++)
     {
         sprintf_s(temp, sizeof(temp), "Index: %d", i);
 
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
         strncpy_s(value, sizeof(key), temp, sizeof(key) - 1);
 
-        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, FALSE);
+        successfulInserts += MC_Hashmap_Insert(hashmap, key, value, false);
     }
 
-    ASSERT_EQUAL_UINT64(successfulInserts, TEST_MID_CONSTANT);
+    ASSERT_EQUAL_UINT64(successfulInserts, TEST_CONSTANT_32, failCount);
 
-    for (u8 i = 0; i < TEST_SMALL_CONSTANT; i++)
+    for (u8 i = 0; i < TEST_CONSTANT_10; i++)
     {
         sprintf_s(temp, sizeof(temp),"Index: %d", i);
         strncpy_s(key, sizeof(key), temp, sizeof(key) - 1);
@@ -127,26 +149,28 @@ void Test_MC_Hash_SearchAndRemove(void)
         successfulRemoves += MC_Hashmap_RemoveAt(hashmap, key);
         void* o = MC_Hashmap_Search(hashmap, key);
 
-        ASSERT_NULL(o);
+        ASSERT_NULL(o, failCount);
     }
 
-    ASSERT_TRUE((successfulInserts - successfulRemoves) == (TEST_MID_CONSTANT - TEST_SMALL_CONSTANT));
+    ASSERT_TRUE((successfulInserts - successfulRemoves) == (TEST_CONSTANT_32 - TEST_CONSTANT_10), failCount);
 
     MC_Hashmap_Free(&hashmap);
 
-    ASSERT_NULL(hashmap);
+    ASSERT_NULL(hashmap, failCount);
+
+    TEST_TEARDOWN(failCount);
+
+    return failCount;
 }
 
-void Test_MC_Module_Hash(void)
+int main(void)
 {
-    /* Safekeeping with global file pointer */
-    OPEN_TEST_OUTPUT_FILE("a");
+    int failCount = 0;
 
-    Test_MC_Hash_InitAndFree();
-    Test_MC_Hash_BigSize();
-    Test_MC_Hash_DynamicInsertion();
-    Test_MC_Hash_SearchAndRemove();
+    failCount += Test_MC_Hash_InitAndFree();
+    failCount += Test_MC_Hash_BigSize();
+    failCount += Test_MC_Hash_DynamicInsertion();
+    failCount += Test_MC_Hash_SearchAndRemove();
 
-    /* Safekeeping with global file pointer */
-    CLOSE_TEST_OUTPUT_FILE();
+    return failCount;
 }

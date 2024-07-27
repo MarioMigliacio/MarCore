@@ -1,25 +1,20 @@
 ###################################################################################################
 #                                                                                                 #
 # Author: Mario Migliacio                                                                         #
-# @file: build.ps1                                                                                #
-# \brief: Build convenience script, allows for additional flags to customize the build process    #
+# @file: clean.ps1                                                                                #
+# \brief: Removes the build and last test artifacts from project                                  #
 #                                                                                                 #
-# \Expects: No expectations are made prior to executing build.ps1                                 #
+# \Expects: ..\build folder exists and was generated with CMakeLists.txt                          #
 #                                                                                                 #
-# \Params: -c [CLEAN] clean the application before build                                          #
-#          -t [TEST] run the CTest suite after build                                              #
+# \Params: NONE                                                                                   #
 #                                                                                                 #
-# \Success: The application has been built                                                        #
-#           Display build status in MAGENTA prompt                                                #
+# \Success: The application's build folder, and last test output artifacts are removed            #
+#           if Build directory existed, display its removal with GREEN prompt                     #
+#           if Test output artifact existed, display its removal with GREEN prompt                #
 #                                                                                                 #
 # \Failure: Display that ..\build does not exist in RED prompt                                    #
 #                                                                                                 #
 ###################################################################################################
-
-param (
-    [switch]$c,
-    [switch]$t
-)
 
 # Note: The scriptDir, projectRoot, and buildDir allows this script to be invoked from anywhere. 
 #       This allows the use of .\scr\build.ps1 from even the root directory, or inside the \scr directly.
@@ -29,69 +24,53 @@ $scriptDir = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
 
 # Define the project root and build directory
 $projectRoot = (Resolve-Path "$scriptDir\..").Path
-$buildDir = "$projectRoot\build"
+$testDir = "$projectRoot\build\MC"
+$outputFile = "$projectRoot\build\MC\Testing\Temporary\LastTest.log"
+$dumpDir = "$projectRoot\test_output\"
 
-function createBuildDir
-{
-    # MUST: Create the build directory if it doesn't exist
-    if (-Not (Test-Path -Path $buildDir)) 
-    {
-        New-Item -ItemType Directory -Path $buildDir
-    }
-}
-
-function simpleBuild
+function simpleTest
 {
     # Preserve our calling directory, so running this script doesn't change our location in the shell.
     $originalDir = Get-Location
 
     # Change to the project root directory
-    Set-Location -Path $projectRoot
+    Set-Location -Path $testDir
 
     # Create the build/bin directory structure and place all the executables and libraries
-    cmake -S . -B $buildDir
-    cmake --build $buildDir
+    ctest -V -C Debug
 
     # Return to the original directory
     Set-Location -Path $originalDir
 }
 
-function cleanBuild
+function copyFile
 {
-    $cleanPath = "$scriptDir\clean.ps1"
-    & $cleanPath
-    Write-Host "Clean Finished.. Rebuilding project." -ForegroundColor Magenta
+    # Create the dump directory if it does not exist
+    if (-Not (Test-Path -Path $dumpDir))
+    {
+        New-Item -ItemType Directory -Path $dumpDir
+    }
+
+    # Check if the output file exists and copy it to the dump directory
+    if (Test-Path -Path $outputFile)
+    {
+        $outputFileName = "LastTest.log"
+        $newOutputFile = "$dumpDir$outputFileName"
+        Copy-Item -Path $outputFile -Destination $newOutputFile
+        Write-Host "See MarCore\test_output folder for recent test activity" -ForegroundColor Magenta
+    }
+    else
+    {
+        Write-Host "Unable to write Output file: $outputFile" -ForegroundColor Red
+    }
 }
 
-function runTest
+if ((Test-Path -Path $testDir)) 
 {
-    $testPath = "$scriptDir\test.ps1"
-    & $testPath
-    Write-Host "CTest Test Finished." -ForegroundColor Magenta
+    simpleTest
+    copyFile
 }
-
-# Locically number 1 to run.
-if ($c)
+else
 {
-    cleanBuild
-}
-
-# Actual build.
-try
-{
-    Write-Host "Standard Build Started." -ForegroundColor Magenta
-    createBuildDir
-    simpleBuild
-    Write-Host "Standard Build Concluded." -ForegroundColor Magenta
-}
-catch
-{
-    Write-Host "Build Failed." -ForegroundColor Red
-    exit 1
-}
-
-# If we want to do a simple test run, execute it now.
-if ($t)
-{
-    runTest
+    Write-Host "Unable to locate build folder for testing." -ForegroundColor Red
 }

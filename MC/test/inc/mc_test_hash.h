@@ -2,40 +2,35 @@
 /*                                                                                               */
 /* Author: Mario Migliacio                                                                       */
 /* @file: mc_hash.h                                                                              */
-/* \brief: Provide a hash-like data structure                                                    */
+/* \brief: Test prototypes for the hash interface                                                */
 /*                                                                                               */
-/* \Expects: mc_type.h is linked properly and defines types needed                               */
+/* \Expects: No expectations are made prior to type definitions in this file                     */
 /*                                                                                               */
 /* ********************************************************************************************* */
 
 #ifndef MC_TEST_HASH_H
 #define MC_TEST_HASH_H
 
+#include "mc_type.h"
+
 /**
  * \brief Test HashMap init and clear functionality
  */
-void Test_MC_Hash_InitAndFree(void);
+u32 Test_MC_Hash_InitAndFree(void);
 
 /**
  * \brief Test HashMaps of huge sizes, and working ok
  */
-void Test_MC_Hash_BigSize(void);
+u32 Test_MC_Hash_BigSize(void);
 
 /**
  * \brief Test Inserting of dynamic and non dynamic values
  */
-void Test_MC_Hash_DynamicInsertion(void);
+u32 Test_MC_Hash_DynamicInsertion(void);
 
 /**
  * \brief Test HashMap searching, and entry removals
  */
-void Test_MC_Hash_SearchAndRemove(void);
-
-/**
- * \brief Main exposed module for all unit tests of type MC_Hash
- *
- * \details Package all the mar core hashmap unit tests
- */
-void Test_MC_Module_Hash(void);
+u32 Test_MC_Hash_SearchAndRemove(void);
 
 #endif
